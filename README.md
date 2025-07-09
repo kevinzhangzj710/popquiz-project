@@ -1,4 +1,9 @@
 # popquiz-project
 PopQuiz - using AI to give smart pop quiz about any content, a quick and easy way to check the audience "have you paid attention".
-作者之一：朱志恒
-南京理工大学aaaa
+
+## 项目成员
+
+张骏 kevinzhangzj
+王庆宇 3241672910
+朱志恒 2601880763
+南京理工大学

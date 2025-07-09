@@ -5,4 +5,6 @@ PopQuiz - using AI to give smart pop quiz about any content, a quick and easy wa
 ## 项目成员
 
 张骏 kevinzhangzj
-王庆宇 3241672910
+王庆宇 3241672910 作者之一
+
+

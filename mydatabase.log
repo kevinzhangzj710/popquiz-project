@@ -1,0 +1,13 @@
+/*C2*/SET SCHEMA PUBLIC
+create table USERS\u000d\u000a(\u000d\u000a    ID       INTEGER identity\u000d\u000a        constraint USERS_PK\u000d\u000a            primary key,\u000d\u000a    USERNAME VARCHAR(30) not null\u000d\u000a        constraint USERS_PK_2\u000d\u000a            unique,\u000d\u000a    PASSWORD VARCHAR(64) not null,\u000d\u000a    NAME     VARCHAR(30) not null\u000d\u000a)
+/*C3*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C2*/create table COURSES\u000d\u000a(\u000d\u000a    ID           INTEGER identity\u000d\u000a        constraint COURSES_PK\u000d\u000a            primary key,\u000d\u000a    TITLE        VARCHAR(60)             not null,\u000d\u000a    DESCRIPTION  VARCHAR(200) default '' not null,\u000d\u000a    ORGANIZER_ID INTEGER                 not null\u000d\u000a        constraint COURSES_USERS_ID_FK\u000d\u000a            references USERS\u000d\u000a)
+/*C4*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C2*/create table COURSE_LISTENER\u000d\u000a(\u000d\u000a    ID        INTEGER identity\u000d\u000a        constraint COURSE_LISTENER_PK\u000d\u000a            primary key,\u000d\u000a    COURSE_ID INTEGER not null\u000d\u000a        constraint COURSE_LISTENER_COURSES_ID_FK\u000d\u000a            references COURSES,\u000d\u000a    USER_ID   INTEGER not null\u000d\u000a        constraint COURSE_LISTENER_USERS_ID_FK\u000d\u000a            references USERS\u000d\u000a)
+/*C5*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C2*/create table SPEECHES\u000d\u000a(\u000d\u000a    ID         INTEGER identity\u000d\u000a        constraint SPEECHES_PK\u000d\u000a            primary key,\u000d\u000a    TITLE      VARCHAR(60) not null,\u000d\u000a    SPEAKER_ID INTEGER     not null\u000d\u000a        constraint SPEECHES_USERS_ID_FK\u000d\u000a            references USERS,\u000d\u000a    COURSE_ID  INTEGER     not null\u000d\u000a        constraint SPEECHES_COURSES_ID_FK\u000d\u000a            references COURSES\u000d\u000a)
+/*C6*/SET SCHEMA PUBLIC
+DISCONNECT

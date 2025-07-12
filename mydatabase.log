@@ -1,4 +1,5 @@
 /*C2*/SET SCHEMA PUBLIC
+set schema PUBLIC
 create table USERS\u000d\u000a(\u000d\u000a    ID       INTEGER identity\u000d\u000a        constraint USERS_PK\u000d\u000a            primary key,\u000d\u000a    USERNAME VARCHAR(30) not null\u000d\u000a        constraint USERS_PK_2\u000d\u000a            unique,\u000d\u000a    PASSWORD VARCHAR(64) not null,\u000d\u000a    NAME     VARCHAR(30) not null\u000d\u000a)
 /*C3*/SET SCHEMA PUBLIC
 DISCONNECT

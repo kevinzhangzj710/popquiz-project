@@ -1,20 +1,42 @@
 package cn.edu.njust.hearth.popquiz_backend.mapper;
 import cn.edu.njust.hearth.popquiz_backend.entity.Course;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import cn.edu.njust.hearth.popquiz_backend.entity.Speech;
+import org.apache.ibatis.annotations.*;
+
 import java.util.List;
 @Mapper
 public interface CourseMapper {
     @Select("SELECT COURSE_ID FROM COURSE_LISTENER WHERE USER_ID = #{uid}")
     public List<Integer> findListenByUid(@Param("uid") Integer uid);
 
+    @Select("SELECT * FROM SPEECHES WHERE COURSE_ID = #{cid}")
+    public List<Speech> findSpeechesByCid(@Param("cid") Integer cid);
+
     @Select("SELECT COURSE_ID FROM SPEECHES WHERE SPEAKER_ID = #{uid}")
-    public List<Integer> findSpeechByUid(@Param("uid") Integer uid);
+    public List<Integer> findCoursesByUid(@Param("uid") Integer uid);
 
     @Select("SELECT * FROM COURSES WHERE ID = #{cid}")
     public Course findByCid(@Param("cid") Integer cid);
 
+    @Insert("INSERT INTO COURSES (title, description, ORGANIZER_ID) " +
+            "VALUES (#{title}, #{description}, #{organizer_id})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    int insertCourse(Course course);
+
+    @Insert("INSERT INTO SPEECHES (title, SPEAKER_ID, COURSE_ID) " +
+            "VALUES (#{title}, #{speaker_id}, #{course_id})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    int insertSpeech(Speech speech);
+
+    @Insert("INSERT INTO COURSE_LISTENER (COURSE_ID, USER_ID) " +
+            "VALUES (#{cid}, #{uid})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    int insertCourse_Listener(@Param("cid") int cid, @Param("uid") int uid);
+
+    @Delete("DELETE FROM COURSE_LISTENER where COURSE_ID = #{cid} AND USER_ID = #{uid}")
+    void deleteCourse_Listener(@Param("cid") int cid, @Param("uid") int uid);
+
+    @Delete("DELETE FROM SPEECHES where COURSE_ID = #{cid} AND SPEAKER_ID = #{uid}")
+    void deleteCourse_Teacher(@Param("cid") int cid, @Param("uid") int uid);
 
 }

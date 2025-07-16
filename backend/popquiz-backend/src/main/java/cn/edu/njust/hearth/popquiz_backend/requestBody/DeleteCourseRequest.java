@@ -1,8 +1,8 @@
 package cn.edu.njust.hearth.popquiz_backend.requestBody;
 
 public class DeleteCourseRequest {
-    int uid;
-    int course_id;
+    public int uid;
+    public int course_id;
 
     public int uid() {
         return uid;

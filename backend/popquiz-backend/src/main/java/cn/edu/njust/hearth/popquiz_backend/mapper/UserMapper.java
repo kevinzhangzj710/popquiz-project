@@ -1,9 +1,6 @@
 package cn.edu.njust.hearth.popquiz_backend.mapper;
 import cn.edu.njust.hearth.popquiz_backend.entity.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -17,6 +14,7 @@ public interface UserMapper {
     );
 
     @Insert("INSERT INTO USERS (USERNAME, PASSWORD, NAME) VALUES (#{user.username},#{user.password},#{user.name})")
-    void register(@Param("user") User user);
+    //@Options(useGeneratedKeys = true, keyProperty = "id")
+     void register(@Param("user") User user);
 
 }

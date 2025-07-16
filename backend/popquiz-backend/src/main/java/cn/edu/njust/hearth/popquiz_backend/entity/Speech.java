@@ -1,10 +1,10 @@
 package cn.edu.njust.hearth.popquiz_backend.entity;
 
 public class Speech {
-    int id;
-    String title;
-    int speaker_id;
-    int course_id;
+    public int id;
+    public String title;
+    public int speaker_id;
+    public int course_id;
 
     public int id() {
         return id;

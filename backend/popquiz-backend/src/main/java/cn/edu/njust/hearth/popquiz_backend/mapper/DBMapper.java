@@ -77,4 +77,102 @@ create table if not exists COURSE_LISTENER
 
 """)
     public void createSpeechesTable();
+
+    @Select("""
+
+     create table if not exists PUBLIC.QUESTIONS
+     (
+         ID         INTEGER identity
+             constraint QUESTIONS_PK
+                 primary key,
+         QUESTION   VARCHAR(200)                        not null,
+         SELECTION  VARCHAR(200)                        not null,
+         ANSWER     CHARACTER(1)                        not null,
+         SPEECH_ID  INTEGER                             not null
+             constraint QUESTIONS_SPEECHES_ID_FK
+                 references PUBLIC.SPEECHES,
+         START_TIME TIMESTAMP default CURRENT_TIMESTAMP not null,
+         END_TIME   TIMESTAMP                           not null
+     );       
+
+""")
+    public void createQUESTIONSTable();
+
+
+    @Select("""
+
+    create table if not exists PUBLIC.QUESTION_COMMENTS
+    (
+        ID          INTEGER identity
+            constraint QUESTION_COMMENTS_PK
+                primary key,
+        COMMENT     VARCHAR(100) not null,
+        QUESTION_ID INTEGER      not null
+            constraint QUESTION_COMMENTS_QUESTIONS_ID_FK
+                references PUBLIC.QUESTIONS,
+        USER_ID     INTEGER      not null
+            constraint QUESTION_COMMENTS_USERS_ID_FK
+                references PUBLIC.USERS
+    );        
+
+""")
+    public void createQUESTION_COMMENTS_Table();
+
+
+    @Select("""
+
+     create table if not exists PUBLIC.SPEECH_COMMENTS
+     (
+         ID        INTEGER identity
+             constraint SPEECH_COMMENTS_PK
+                 primary key,
+         COMMENT   VARCHAR(100) not null,
+         SPEECH_ID INTEGER      not null
+             constraint SPEECH_COMMENTS_SPEECHES_ID_FK
+                 references PUBLIC.SPEECHES,
+         USER_ID   INTEGER      not null
+             constraint SPEECH_COMMENTS_USERS_ID_FK
+                 references PUBLIC.USERS
+     );       
+
+""")
+    public void createSPEECH_COMMENTS_Table();
+
+
+    @Select("""
+
+     create table if not exists PUBLIC.SPEECH_FILES
+     (
+         ID        INTEGER identity
+             constraint SPEECH_FILES_PK
+                 primary key,
+         FILENAME  VARCHAR(200) not null,
+         FILEPATH  VARCHAR(100) not null,
+         SPEECH_ID INTEGER      not null
+             constraint SPEECH_FILES_SPEECHES_ID_FK
+                 references PUBLIC.SPEECHES
+     );       
+
+""")
+    public void createPEECH_FILES_Table();
+
+
+    @Select("""
+
+     create table if not exists PUBLIC.SUBMITS
+     (
+         ID          INTEGER identity
+             constraint SUBMITS_PK
+                 primary key,
+         QUESTION_ID INTEGER      not null
+             constraint SUBMITS_QUESTIONS_ID_FK
+                 references PUBLIC.QUESTIONS,
+         USER_ID     INTEGER      not null
+             constraint SUBMITS_USERS_ID_FK
+                 references PUBLIC.USERS,
+         ANSWER      CHARACTER(1) not null
+     );       
+
+""")
+    public void createSUBMITSTable();
 }

@@ -1,10 +1,16 @@
 package cn.edu.njust.hearth.popquiz_backend.entity;
 
+import jakarta.validation.constraints.NotNull;
+
 public class Course {
 
+    @NotNull
     public int id;
+    @NotNull
     public String title;
+    @NotNull
     public String description;
+    @NotNull
     public int organizer_id;
 
     public int id() {

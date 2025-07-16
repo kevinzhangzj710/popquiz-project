@@ -8,6 +8,7 @@
 		<version>3.4.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>cn.edu.njust.hearth</groupId>
 	<artifactId>popquiz-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -74,6 +75,7 @@
 			<artifactId>mockito-core</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -82,7 +84,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
 		</plugins>
+
 	</build>
 
 </project>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -23,7 +24,7 @@ public class CourseController {
     @Operation(summary = "获取该用户所听的课程（不包含课时）",description = "获取成功返回课程列表，失败返回空列表")
     public List<Course> getListeningCourse(@RequestParam Integer uid) {
         List<Course>courses = new ArrayList<>();
-        List<Integer>courseIds = courseMapper.findListenByUid(uid);
+        Set<Integer>courseIds = courseMapper.findListenByUid(uid);
         if (courseIds.size() > 0) {
             for (int cid : courseIds)
             {
@@ -45,7 +46,7 @@ public class CourseController {
     @Operation(summary = "获取该用户所讲的课程（不包括课时）",description = "获取成功返回课程列表，失败返回空列表")
     public List<Course> getTeachingCourse(@RequestParam Integer uid) {
         List<Course>courses = new ArrayList<>();
-        List<Integer>courseIds = courseMapper.findCoursesByUid(uid);
+        Set<Integer> courseIds = courseMapper.findCoursesByUid(uid);
         if (courseIds.size() > 0) {
             for (int cid : courseIds)
             {
@@ -57,12 +58,12 @@ public class CourseController {
     }
 
     @PostMapping("/createCourse")
-    @Operation(summary = "创建课程",description = "创建成功返回课程id,失败抛出异常")
+    @Operation(summary = "创建课程",description = "创建成功返回课程id,失败返回-1")
     public int createCourse(@RequestBody CreateCourseRequest courseRequest){
         Course course = new Course();
         course.setOrganizer_id(courseRequest.organizer_id());
         if (!StringUtils.hasText(courseRequest.title())) {
-            throw new IllegalArgumentException("课程标题不能为空");
+            return -1;
         }
         else {
             course.setTitle(courseRequest.title());
@@ -70,21 +71,24 @@ public class CourseController {
         if(courseRequest.description() == null) {
             course.setDescription("");
         }
+        else{
+            course.setDescription(courseRequest.description());
+        }
 
         if (courseMapper.insertCourse(course) == 1) {
             // 4. 此时 course 对象的 id 已被 MyBatis 自动填充
             return course.id(); // 返回自增 ID
         } else {
-            throw new RuntimeException("课程创建失败");
+            return -1;
         }
     }
 
     @PostMapping("/createSpeech")
-    @Operation(summary = "创建课时",description = "创建成功返回课时id,失败抛出异常")
+    @Operation(summary = "创建课时",description = "创建成功返回课时id,失败返回-1")
     public int createSpeech(@RequestBody CreateSpeechRequest speechRequest){
         Speech speech = new Speech();
         if (!StringUtils.hasText(speechRequest.title())) {
-            throw new IllegalArgumentException("课时标题不能为空");
+            return -1;
         }
         else {
             speech.setTitle(speechRequest.title());
@@ -95,12 +99,12 @@ public class CourseController {
             // 4. 此时 speech 对象的 id 已被 MyBatis 自动填充
             return speech.id(); // 返回自增 ID
         } else {
-            throw new RuntimeException("课时创建失败");
+            return -1;
         }
     }
 
     @PostMapping("/addCourse")
-    @Operation(summary = "学生添加课程",description = "成功返回1，失败返回0或抛出异常")
+    @Operation(summary = "学生添加课程",description = "成功返回1，失败返回0")
     public int addCourse(@RequestBody AddCourseRequest addCourseRequest){
         int cid = addCourseRequest.course_id();
         int uid = addCourseRequest.uid();
@@ -116,10 +120,10 @@ public class CourseController {
     }
 
     @PostMapping("/deleteCourse_Teach")
-    @Operation(summary = "老师删除所讲的课程",description = "成功/失败不返回信息")
-    public void deleteCourse_Teach(@RequestBody DeleteCourseRequest deleteCourseRequest){
+    @Operation(summary = "老师删除所讲的课程",description = "成功返回一个>0的数表示删掉的记录数，失败返回0")
+    public int deleteCourse_Teach(@RequestBody DeleteCourseRequest deleteCourseRequest){
         int cid = deleteCourseRequest.course_id();
         int uid = deleteCourseRequest.uid();
-        courseMapper.deleteCourse_Teacher(cid, uid);
+        return courseMapper.deleteCourse_Teacher(cid, uid);
     }
 }

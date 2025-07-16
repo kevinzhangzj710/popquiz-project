@@ -2,10 +2,10 @@ package cn.edu.njust.hearth.popquiz_backend.entity;
 
 public class Course {
 
-    int id;
-    String title;
-    String description;
-    int organizer_id;
+    public int id;
+    public String title;
+    public String description;
+    public int organizer_id;
 
     public int id() {
         return id;

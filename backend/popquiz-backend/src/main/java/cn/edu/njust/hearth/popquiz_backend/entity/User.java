@@ -3,10 +3,10 @@ package cn.edu.njust.hearth.popquiz_backend.entity;
 public class User {
 
 
-    int id;
-    String username;
-    String password;
-    String name;
+    public int id;
+    public String username;
+    public String password;
+    public String name;
 
     public int id() {
         return id;

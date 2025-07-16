@@ -24,6 +24,26 @@ public class PopquizBackendApplication {
 	void setDBMapper4(DBMapper dbMapper) {
 		dbMapper.createSpeechesTable();
 	}
+	@Autowired
+	void setDBMapper5(DBMapper dbMapper) {
+		dbMapper.createQUESTIONSTable();
+	}
+	@Autowired
+	void setDBMapper6(DBMapper dbMapper) {
+		dbMapper.createQUESTION_COMMENTS_Table();
+	}
+	@Autowired
+	void setDBMapper7(DBMapper dbMapper) {
+		dbMapper.createSUBMITSTable();
+	}
+	@Autowired
+	void setDBMapper8(DBMapper dbMapper) {
+		dbMapper.createPEECH_FILES_Table();
+	}
+	@Autowired
+	void setDBMapper9(DBMapper dbMapper) {
+		dbMapper.createSPEECH_COMMENTS_Table();
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(PopquizBackendApplication.class, args);

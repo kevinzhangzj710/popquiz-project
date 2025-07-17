@@ -13,7 +13,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** 用户注册 */
+        /**
+         * 用户注册
+         * @description 成功与否没有任何返回值
+         */
         post: operations["register"];
         delete?: never;
         options?: never;
@@ -30,8 +33,111 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** 用户登录 */
+        /**
+         * 用户登录
+         * @description 登录成功返回用户ID，失败返回-1。
+         */
         post: operations["Login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/deleteCourse_Teach": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 老师删除所讲的课程
+         * @description 成功返回一个>0的数表示删掉的记录数，失败返回0
+         */
+        post: operations["deleteCourse_Teach"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/deleteCourse_Listen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 学生删除所听的课程
+         * @description 成功/失败不返回信息
+         */
+        post: operations["deleteCourse_Listen"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/createSpeech": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 创建课时
+         * @description 创建成功返回课时id,失败返回-1
+         */
+        post: operations["createSpeech"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/createCourse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 创建课程
+         * @description 创建成功返回课程id,失败返回-1
+         */
+        post: operations["createCourse"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/addCourse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 学生添加课程
+         * @description 成功返回1，失败返回0
+         */
+        post: operations["addCourse"];
         delete?: never;
         options?: never;
         head?: never;
@@ -55,6 +161,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/getTeachingCourse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 获取该用户所讲的课程（不包括课时）
+         * @description 获取成功返回课程列表，失败返回空列表
+         */
+        get: operations["getTeachingCourse"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/getSpeeches": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 获取某课程的所有课时
+         * @description 获取成功返回课时列表，失败返回空列表
+         */
+        get: operations["getSpeeches"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/getListeningCourse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 获取该用户所听的课程（不包含课时）
+         * @description 获取成功返回课程列表，失败返回空列表
+         */
+        get: operations["getListeningCourse"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -67,6 +233,48 @@ export interface components {
         LoginRequest: {
             username?: string;
             password?: string;
+        };
+        DeleteCourseRequest: {
+            /** Format: int32 */
+            uid?: number;
+            /** Format: int32 */
+            course_id?: number;
+        };
+        CreateSpeechRequest: {
+            title?: string;
+            /** Format: int32 */
+            speaker_id?: number;
+            /** Format: int32 */
+            course_id?: number;
+        };
+        CreateCourseRequest: {
+            title?: string;
+            description?: string;
+            /** Format: int32 */
+            organizer_id?: number;
+        };
+        AddCourseRequest: {
+            /** Format: int32 */
+            uid?: number;
+            /** Format: int32 */
+            course_id?: number;
+        };
+        Course: {
+            /** Format: int32 */
+            id: number;
+            title: string;
+            description: string;
+            /** Format: int32 */
+            organizer_id: number;
+        };
+        Speech: {
+            /** Format: int32 */
+            id: number;
+            title: string;
+            /** Format: int32 */
+            speaker_id: number;
+            /** Format: int32 */
+            course_id: number;
         };
     };
     responses: never;
@@ -123,6 +331,124 @@ export interface operations {
             };
         };
     };
+    deleteCourse_Teach: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeleteCourseRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    deleteCourse_Listen: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeleteCourseRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    createSpeech: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateSpeechRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    createCourse: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateCourseRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    addCourse: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddCourseRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
     helloWorld: {
         parameters: {
             query?: never;
@@ -141,6 +467,72 @@ export interface operations {
                 };
                 content: {
                     "*/*": string;
+                };
+            };
+        };
+    };
+    getTeachingCourse: {
+        parameters: {
+            query: {
+                uid: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Course"][];
+                };
+            };
+        };
+    };
+    getSpeeches: {
+        parameters: {
+            query: {
+                courseid: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Speech"][];
+                };
+            };
+        };
+    };
+    getListeningCourse: {
+        parameters: {
+            query: {
+                uid: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Course"][];
                 };
             };
         };

@@ -1,11 +1,15 @@
 package cn.edu.njust.hearth.popquiz_backend.entity;
 
+import jakarta.validation.constraints.NotNull;
+
 public class User {
 
-
+    @NotNull
     public int id;
+    @NotNull
     public String username;
     public String password;
+    @NotNull
     public String name;
 
     public int id() {

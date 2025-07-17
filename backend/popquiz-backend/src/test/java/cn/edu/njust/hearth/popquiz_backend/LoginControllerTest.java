@@ -57,7 +57,6 @@ class LoginControllerTest {
 
         // 创建一个 User 对象，并设置用户 ID、用户名和密码
         User user = new User();
-        user.setId(1);
         user.setUsername("testUser");
         user.setPassword("testPassword");
 
@@ -108,11 +107,21 @@ class LoginControllerTest {
         registerRequest.setPassword("newPassword");
         registerRequest.setName("New User");
 
+        // 创建一个 User 对象，并设置用户信息
+        User user = new User();
+        user.setUsername("newUser");
+        user.setPassword("newPassword");
+        user.setName("New User");
+
         // 调用 LoginController 的 register 方法进行注册操作
         loginController.register(registerRequest);
 
         // 使用 Mockito 的 verify 方法验证 userMapper 的 register 方法是否被调用了一次，
-        // 且传入的参数为任意 User 对象
-        verify(userMapper, times(1)).register(any(User.class));
+        // 且传入的参数为正确的 User 对象
+        verify(userMapper, times(1)).register(argThat(u ->
+                u.username().equals("newUser") &&
+                        u.password().equals("newPassword") &&
+                        u.name().equals("New User")
+        ));
     }
 }

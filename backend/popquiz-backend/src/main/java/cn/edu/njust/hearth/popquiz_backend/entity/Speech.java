@@ -1,9 +1,15 @@
 package cn.edu.njust.hearth.popquiz_backend.entity;
 
+import jakarta.validation.constraints.NotNull;
+
 public class Speech {
+    @NotNull
     public int id;
+    @NotNull
     public String title;
+    @NotNull
     public int speaker_id;
+    @NotNull
     public int course_id;
 
     public int id() {

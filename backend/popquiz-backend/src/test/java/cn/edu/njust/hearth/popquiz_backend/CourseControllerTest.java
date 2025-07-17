@@ -2,6 +2,7 @@ package cn.edu.njust.hearth.popquiz_backend;
 
 import cn.edu.njust.hearth.popquiz_backend.controller.CourseController;
 import cn.edu.njust.hearth.popquiz_backend.entity.Course;
+import cn.edu.njust.hearth.popquiz_backend.entity.Speech;
 import cn.edu.njust.hearth.popquiz_backend.mapper.CourseMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -116,12 +117,12 @@ class CourseControllerTest {
         course4.setDescription("商务口语训练");
 
         // 设置Mock对象的行为
-        when(courseMapper.findSpeechByUid(uid)).thenReturn(courseIds);
+        when(courseMapper.findCoursesByUid(uid)).thenReturn(courseIds);
         when(courseMapper.findByCid(3)).thenReturn(course3);
         when(courseMapper.findByCid(4)).thenReturn(course4);
 
         // 执行测试
-        List<Course> result = courseController.getSpeechCourse(uid);
+        List<Course> result = courseController.getListeningCourse(uid);
 
         // 验证结果
         assertEquals(2, result.size());
@@ -129,7 +130,7 @@ class CourseControllerTest {
         assertEquals("口语课程2", result.get(1).title());
 
         // 验证方法调用
-        verify(courseMapper, times(1)).findSpeechByUid(uid);
+        verify(courseMapper, times(1)).findCoursesByUid(uid);
         verify(courseMapper, times(1)).findByCid(3);
         verify(courseMapper, times(1)).findByCid(4);
     }

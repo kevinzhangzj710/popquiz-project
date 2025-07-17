@@ -126,4 +126,20 @@ public class CourseController {
         int uid = deleteCourseRequest.uid();
         return courseMapper.deleteCourse_Teacher(cid, uid);
     }
+
+    @GetMapping("/getCourseById")
+    @Operation(summary = "通过课程id获取该课程",description = "获取成功返回课程实体，失败返回空实体")
+    public Course getCourseById(@RequestParam int course_id){
+        Course course = courseMapper.findByCid(course_id);
+        return  course;
+    }
+
+    @GetMapping("/getSpeechById")
+    @Operation(summary = "通过课时id获取该课时",description = "获取成功返回课时实体，失败返回空实体")
+    public Speech getSpeechById(@RequestParam int speech_id){
+        Speech speech = courseMapper.findSpeechById(speech_id);
+        return  speech;
+    }
+
+
 }

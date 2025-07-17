@@ -14,6 +14,9 @@ public interface CourseMapper {
     @Select("SELECT * FROM SPEECHES WHERE COURSE_ID = #{cid}")
     public List<Speech> findSpeechesByCid(@Param("cid") Integer cid);
 
+    @Select("SELECT * FROM SPEECHES WHERE ID = #{sid}")
+    public Speech findSpeechById(@Param("sid") Integer sid);
+
     @Select("SELECT COURSE_ID FROM SPEECHES WHERE SPEAKER_ID = #{uid}")
     public Set<Integer> findCoursesByUid(@Param("uid") Integer uid);
 

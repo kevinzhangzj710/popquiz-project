@@ -1,10 +1,11 @@
 import {List, message, Space, Typography} from "antd";
-import {Link, useNavigate} from "react-router";
+import {Link} from "react-router";
 import {useEffect, useState} from "react";
 import {useAtomValue} from "jotai/index";
 import {user_id_atom} from "../states/user.ts";
 import {ErrorBack} from "./utils.tsx";
 import {$fetch} from "../api/api-utils.ts";
+import {QuestionList} from "./Questions.tsx";
 
 type speech_data = { id: number, title: string, speaker_id: number, course_id: number }
 
@@ -69,12 +70,24 @@ export function SpeechList({course_id}: { course_id: number }) {
 }
 
 export function SpeechShowcase({speech_id}: { speech_id: number }) {
-    const [speech, setSpeech] = useState<speech_data>(test_data[0]);
+    const [speech, setSpeech] = useState<speech_data>();
     const user_id = useAtomValue(user_id_atom);
-    const navi = useNavigate();
+    const [messageApi, contextHolder] = message.useMessage()
 
     async function fetchSpeech() {
-        //TODO lack of API!
+        const {data, error} = await $fetch.GET('/api/getSpeechById', {
+            params: {
+                query: {
+                    speech_id: speech_id
+                }
+            }
+        })
+        if (error) {
+            console.log(error)
+            messageApi.error('获取演讲失败')
+        } else {
+            setSpeech(data)
+        }
     }
 
     useEffect(() => {
@@ -82,13 +95,15 @@ export function SpeechShowcase({speech_id}: { speech_id: number }) {
     }, [speech_id, user_id]);
 
     return <>
+        {contextHolder}
         {!speech && <ErrorBack/>}
         {speech && <>
             <Typography.Title level={2}>演讲：{speech.title}</Typography.Title>
             <Typography>演讲ID：{speech.id}</Typography>
             <Typography>所属课程ID：{speech.course_id}</Typography>
             <Typography>演讲者ID：{speech.speaker_id}</Typography>
-
-        </>}
+            <QuestionList speech_id={speech.id}/>
+        </>
+        }
     </>
 }

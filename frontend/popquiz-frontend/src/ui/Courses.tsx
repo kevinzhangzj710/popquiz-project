@@ -105,9 +105,22 @@ export function CourseShowcase({course_id}: { course_id: number }) {
     const [course, setCourse] = useState<course_data>();
     const user_id = useAtomValue(user_id_atom);
     const navi = useNavigate();
+    const [messageApi, contextHolder] = message.useMessage()
 
     async function fetchCourse() {
-        // TODO lack of API!
+        const {data, error} = await $fetch.GET('/api/getCourseById', {
+            params: {
+                query: {
+                    course_id: course_id
+                }
+            }
+        })
+        if (error) {
+            console.log(error)
+            messageApi.error('获取课程失败')
+        } else {
+            setCourse(data)
+        }
     }
 
     useEffect(() => {
@@ -115,6 +128,7 @@ export function CourseShowcase({course_id}: { course_id: number }) {
     }, [course_id, user_id]);
 
     return (<>
+        {contextHolder}
         {!course && <a onClick={() => {
             navi(-1);
         }}>发生错误，请返回</a>}

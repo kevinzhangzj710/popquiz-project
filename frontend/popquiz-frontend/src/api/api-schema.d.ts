@@ -201,6 +201,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/getSpeechById": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 通过课时id获取该课时
+         * @description 获取成功返回课时实体，失败返回空实体
+         */
+        get: operations["getSpeechById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/getListeningCourse": {
         parameters: {
             query?: never;
@@ -213,6 +233,26 @@ export interface paths {
          * @description 获取成功返回课程列表，失败返回空列表
          */
         get: operations["getListeningCourse"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/getCourseById": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 通过课程id获取该课程
+         * @description 获取成功返回课程实体，失败返回空实体
+         */
+        get: operations["getCourseById"];
         put?: never;
         post?: never;
         delete?: never;
@@ -515,6 +555,28 @@ export interface operations {
             };
         };
     };
+    getSpeechById: {
+        parameters: {
+            query: {
+                speech_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Speech"];
+                };
+            };
+        };
+    };
     getListeningCourse: {
         parameters: {
             query: {
@@ -533,6 +595,28 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["Course"][];
+                };
+            };
+        };
+    };
+    getCourseById: {
+        parameters: {
+            query: {
+                course_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Course"];
                 };
             };
         };

@@ -55,7 +55,7 @@ class CourseControllerTest {
         course2.setDescription("进阶听力训练");
 
         // 设置Mock对象的行为：当查询用户听力课程ID时返回预设ID列表
-        when(courseMapper.findListenByUid(uid)).thenReturn(courseIds);
+        //when(courseMapper.findListenByUid(uid)).thenReturn(courseIds);
         // 设置Mock对象的行为：当查询具体课程信息时返回预设课程对象
         when(courseMapper.findByCid(1)).thenReturn(course1);
         when(courseMapper.findByCid(2)).thenReturn(course2);
@@ -83,7 +83,7 @@ class CourseControllerTest {
         Integer uid = 1;
 
         // 设置Mock对象的行为：返回空课程ID列表
-        when(courseMapper.findListenByUid(uid)).thenReturn(Collections.emptyList());
+        //when(courseMapper.findListenByUid(uid)).thenReturn(Collections.emptyList());
 
         // 执行测试
         List<Course> result = courseController.getListeningCourse(uid);
@@ -117,7 +117,7 @@ class CourseControllerTest {
         course4.setDescription("商务口语训练");
 
         // 设置Mock对象的行为
-        when(courseMapper.findCoursesByUid(uid)).thenReturn(courseIds);
+        //when(courseMapper.findCoursesByUid(uid)).thenReturn(courseIds);
         when(courseMapper.findByCid(3)).thenReturn(course3);
         when(courseMapper.findByCid(4)).thenReturn(course4);
 

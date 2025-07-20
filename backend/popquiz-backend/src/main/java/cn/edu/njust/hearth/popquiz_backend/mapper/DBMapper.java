@@ -175,4 +175,18 @@ create table if not exists COURSE_LISTENER
 
 """)
     public void createSUBMITSTable();
+
+    @Select("""
+            create table if not exists PUBLIC.SPEECH_CONTENT
+            (
+                ID           INTEGER identity
+                    constraint SPEECH_CONTENT_PK
+                        primary key,
+                SPEECH_ID    INTEGER      not null
+                    constraint SPEECH_CONTENT_SPEECHES_ID_FK
+                        references PUBLIC.SPEECHES,
+                CONTENT_PATH VARCHAR(100) not null
+            );
+            """)
+    public void createSPEECHCONTENTTable();
 }

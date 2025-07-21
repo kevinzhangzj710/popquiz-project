@@ -1,6 +1,7 @@
 import {Flex, Layout, Menu, theme} from "antd";
 import {Content, Footer, Header} from "antd/es/layout/layout";
 import {CourseList} from "../ui/Courses.tsx";
+import {Link} from "react-router";
 
 export function HomePageLayout({children}: { children: React.ReactNode }) {
     const {
@@ -11,7 +12,10 @@ export function HomePageLayout({children}: { children: React.ReactNode }) {
             <Header>
                 <Menu theme={'dark'} mode={'horizontal'} style={{flex: 1, minWidth: 0}}
                       defaultSelectedKeys={['1']}
-                      items={[{key: 1, label: '主页'}, {key: 2, label: "我听的课"}, {key: 3, label: "我教的课"},]}
+                      items={[{key: 1, label: <Link to={'/'}>主页</Link>,}, {key: 2, label: "我听的课"}, {
+                          key: 3,
+                          label: "我教的课"
+                      },]}
                 />
             </Header>
             <Content style={{padding: '48px'}}>

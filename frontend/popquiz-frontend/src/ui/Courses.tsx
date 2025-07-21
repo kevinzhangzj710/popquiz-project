@@ -1,12 +1,13 @@
 import {useEffect, useState} from "react";
-import {List, message, Space, Typography} from "antd";
+import {Button, List, message, Space, Typography} from "antd";
 import {Link, useNavigate} from "react-router";
 import {useAtomValue} from "jotai";
 import {user_id_atom} from "../states/user.ts";
 import {SpeechList} from "./Speeches.tsx";
 import {$fetch} from "../api/api-utils.ts";
+import {ModalForm, ProFormCheckbox, ProFormDigit, ProFormText} from "@ant-design/pro-components";
 
-type course_data = {
+export type course_data = {
     id: number,
     title: string,
     description: string,
@@ -94,6 +95,75 @@ export function CourseList({teaching}: { teaching: boolean }) {
     return (<>
         {contextHolder}
         <Typography.Title level={2}>我{teaching ? '教' : '听'}的课：</Typography.Title>
+        {teaching &&
+            <ModalForm<{ title: string, description: string, organizer_id: number }>
+                title={'新建课程'}
+                trigger={<Button>新建课程</Button>}
+                onFinish={async (formData) => {
+                    const {data, error} = await $fetch.POST('/api/createCourse', {
+                        body: {
+                            ...formData
+                        }
+                    })
+                    if (error || data === -1) {
+                        console.log(error)
+                        messageApi.error('创建课程失败')
+                    } else {
+                        messageApi.success(`创建课程成功，课程ID：${data}`)
+                    }
+                }}
+            >
+                <ProFormText
+                    name={'title'}
+                    label={'课程标题'}
+                />
+                <ProFormText
+                    name={'description'}
+                    label={'课程简介'}
+                />
+                <ProFormDigit
+                    name={"organizer_id"}
+                    label={'课程组织者ID'}
+                    initialValue={user_id}
+                />
+            </ModalForm>}
+        <ModalForm<{
+            course_id: number,
+            is_speaker: boolean
+        }>
+            title={'加入课程'}
+            trigger={<Button>加入课程</Button>}
+            onFinish={async (formData) => {
+                if (formData.is_speaker) {
+                    // TODO lack of API
+                } else {
+                    const {data, error} = await $fetch.POST('/api/addCourse', {
+                        body: {
+                            uid: user_id,
+                            course_id: formData.course_id
+                        }
+                    })
+                    if (error || data === 0) {
+                        messageApi.error('添加课程失败')
+                    } else {
+                        messageApi.success(`添加课程成功，课程ID：${data}`)
+                        await fetchCourses()
+                    }
+                }
+            }}
+        >
+            <ProFormDigit
+                name={'course_id'}
+                label={'课程ID'}
+            />
+            <ProFormCheckbox
+                disabled={!teaching}
+                name={'is_student'}
+                label={'以演讲者身份加入'}
+                initialValue={teaching}
+            />
+        </ModalForm>
+
         <List
             dataSource={courses}
             renderItem={(item) => <CourseListItem data={item}/>}
@@ -137,7 +207,7 @@ export function CourseShowcase({course_id}: { course_id: number }) {
             <Typography>课程ID：{course.organizer_id}</Typography>
             <Typography>组织者：{course.organizer_id}</Typography>
             <Typography>简介：{course.description}</Typography>
-            <SpeechList course_id={course_id}/>
+            <SpeechList course_id={course_id} is_organizer={course.organizer_id === user_id}/>
         </>}
 
     </>)

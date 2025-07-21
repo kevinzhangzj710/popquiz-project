@@ -4,12 +4,13 @@ import {Flex, message, theme, Typography} from 'antd';
 import {$fetch} from "../api/api-utils.ts";
 import {useSetAtom} from "jotai";
 import {user_id_atom} from "../states/user.ts";
-import {Link} from "react-router";
+import {Link, useNavigate} from "react-router";
 
 export function LoginPage() {
     const {token} = theme.useToken();
     const [messageApi, contextHolder] = message.useMessage()
     const setUserId = useSetAtom(user_id_atom);
+    const navi = useNavigate();
     const onFinish = async ({username, password}: {
         username: string,
         password: string,
@@ -28,6 +29,7 @@ export function LoginPage() {
             console.log(data);
             messageApi.success('登录成功')
             setUserId(data);
+            navi('/')
         }
     }
     return (

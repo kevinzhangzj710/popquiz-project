@@ -5,6 +5,7 @@ import {LoginPage, SignupPage} from "./pages/Login.tsx";
 import {HomePage} from "./pages/Dashboard.tsx";
 import {CoursePage} from "./pages/CoursePage.tsx";
 import {SpeechPage} from "./pages/SpeechPage.tsx";
+import {StudentQuestionPage, TeacherQuestionPage} from "./pages/QuestionPage.tsx";
 
 
 export function MainRouter() {
@@ -13,11 +14,14 @@ export function MainRouter() {
         return <Routes>
             <Route path={'/'} element={<LoginPage/>}/>
             <Route path={'/signup'} element={<SignupPage/>}/>
+            <Route path={'*'} element={<LoginPage/>}/>
         </Routes>
     }
     return (<Routes>
         <Route path={'/'} element={<HomePage/>}/>
         <Route path={'/course/:course_id'} element={<CoursePage/>}/>
         <Route path={'/speech/:speech_id'} element={<SpeechPage/>}/>
+        <Route path={'/question/teacher/:question_id'} element={<TeacherQuestionPage/>}/>
+        <Route path={'/question/student/:question_id'} element={<StudentQuestionPage/>}/>
     </Routes>)
 }

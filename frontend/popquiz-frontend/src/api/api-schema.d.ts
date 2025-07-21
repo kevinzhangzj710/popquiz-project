@@ -4,6 +4,38 @@
  */
 
 export interface paths {
+    "/api/tingwu/upload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["upload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tingwu/realtime-meeting": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["createRealtimeMeeting"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/register": {
         parameters: {
             query?: never;
@@ -38,6 +70,46 @@ export interface paths {
          * @description 登录成功返回用户ID，失败返回-1。
          */
         post: operations["Login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/deleteSpeComment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 学生删除对某个speech的评论
+         * @description 成功返回一个>0的数表示删掉的记录数，失败返回0
+         */
+        post: operations["deleteSpeComment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/deleteQueComment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 学生删除对某个quiz的评论
+         * @description 成功返回一个>0的数表示删掉的记录数，失败返回0
+         */
+        post: operations["deleteQueComment"];
         delete?: never;
         options?: never;
         head?: never;
@@ -84,6 +156,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/createSubmit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 学生提交某个quiz的答案
+         * @description 提交成功返回submit_id,失败返回-1
+         */
+        post: operations["CreateSubmit"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/createSpeech": {
         parameters: {
             query?: never;
@@ -98,6 +190,26 @@ export interface paths {
          * @description 创建成功返回课时id,失败返回-1
          */
         post: operations["createSpeech"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/createQuestion": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 创建一个quiz
+         * @description 创建成功返回quiz的id，失败返回-1
+         */
+        post: operations["CreateQuestion"];
         delete?: never;
         options?: never;
         head?: never;
@@ -124,6 +236,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/addSpeComment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 用户添加对于某个speech的评论
+         * @description 添加成功返回该评论的id，失败返回-1
+         */
+        post: operations["addSpeComment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/addQueComment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 用户添加对于某个quiz的评论
+         * @description 添加成功返回该评论的id，失败返回-1
+         */
+        post: operations["addQueComment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/addCourse": {
         parameters: {
             query?: never;
@@ -138,6 +290,26 @@ export interface paths {
          * @description 成功返回1，失败返回0
          */
         post: operations["addCourse"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/judgeSubmit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 判断学生对于某道题目的答案对错（默认学生只能提交一次答案）
+         * @description 若答对返回true，答错返回false
+         */
+        get: operations["judgeSubmit"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -181,6 +353,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/getSubmitId": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 通过quiz的id和学生的id，获取到学生对于该quiz的submit_id
+         * @description 提交成功返回submit_id,失败返回-1
+         */
+        get: operations["GetSubmitId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/getSubmitById": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 通过submit的id获取该submit
+         * @description 获取成功返回submit实体，失败返回空实体
+         */
+        get: operations["getSubmitById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/getSpeeches": {
         parameters: {
             query?: never;
@@ -213,6 +425,166 @@ export interface paths {
          * @description 获取成功返回课时实体，失败返回空实体
          */
         get: operations["getSpeechById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/getSpeComment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 根据某个speech评论的id获取该评论
+         * @description 添加成功返回该评论的实体，失败返回空实体
+         */
+        get: operations["getSpeComment"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/getSpeAllComments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 根据speech的id获取该场speech的全部用户的评论
+         * @description 获取成功返回一个评论列表，失败返回空列表
+         */
+        get: operations["getSpeAllComments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/getRateofMine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 获取在本次speech中，我对所有题目的作答正确率是多少
+         * @description 返回用户所答的正确率（用浮点数表示）
+         */
+        get: operations["getRateofMine"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/getQuestionList": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 通过speech_id获取该课时的所有quiz
+         * @description 获取成功返回问题列表，失败返回空列表
+         */
+        get: operations["getQuestionList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/getQuestionById": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 通过问题的id获取该问题
+         * @description 获取成功返回问题实体，失败返回空实体
+         */
+        get: operations["getQuestionById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/getQueComment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 根据某个问题评论的id获取该评论
+         * @description 添加成功返回该评论的实体，失败返回空实体
+         */
+        get: operations["getQueComment"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/getQueAllComments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 根据quiz的id获取该quiz的全部用户的评论
+         * @description 获取成功返回一个评论列表，失败返回空列表
+         */
+        get: operations["getQueAllComments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/getNumofRight": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 获取在本次speech中，我答对了多少题
+         * @description 返回答对题目的数量
+         */
+        get: operations["getNumofRight"];
         put?: never;
         post?: never;
         delete?: never;
@@ -265,6 +637,19 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        RealtimeMeetingRequest: {
+            sourceLanguage?: string;
+            format?: string;
+            /** Format: int32 */
+            sampleRate?: number;
+            diarizationEnabled?: boolean;
+            /** Format: int32 */
+            speakerCount?: number;
+            translationEnabled?: boolean;
+            targetLanguages?: string[];
+            summarizationEnabled?: boolean;
+            summarizationTypes?: string[];
+        };
         RegisterRequest: {
             username?: string;
             password?: string;
@@ -280,6 +665,13 @@ export interface components {
             /** Format: int32 */
             course_id?: number;
         };
+        CreateSubmitRequest: {
+            /** Format: int32 */
+            question_id: number;
+            /** Format: int32 */
+            user_id: number;
+            answer: string;
+        };
         CreateSpeechRequest: {
             title?: string;
             /** Format: int32 */
@@ -287,11 +679,36 @@ export interface components {
             /** Format: int32 */
             course_id?: number;
         };
+        CreateQuestionRequest: {
+            question: string;
+            selection: string;
+            answer: string;
+            /** Format: int32 */
+            speech_id: number;
+            /** Format: date-time */
+            start_time: string;
+            /** Format: date-time */
+            end_time: string;
+        };
         CreateCourseRequest: {
             title?: string;
             description?: string;
             /** Format: int32 */
             organizer_id?: number;
+        };
+        CreateSpeCommentRequest: {
+            comment: string;
+            /** Format: int32 */
+            speech_id: number;
+            /** Format: int32 */
+            user_id: number;
+        };
+        CreateQueCommentRequest: {
+            /** Format: int32 */
+            question_id: number;
+            /** Format: int32 */
+            user_id: number;
+            comment: string;
         };
         AddCourseRequest: {
             /** Format: int32 */
@@ -307,6 +724,15 @@ export interface components {
             /** Format: int32 */
             organizer_id: number;
         };
+        Submit: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            question_id: number;
+            /** Format: int32 */
+            user_id: number;
+            answer: string;
+        };
         Speech: {
             /** Format: int32 */
             id: number;
@@ -315,6 +741,37 @@ export interface components {
             speaker_id: number;
             /** Format: int32 */
             course_id: number;
+        };
+        Speech_comments: {
+            /** Format: int32 */
+            id: number;
+            comment: string;
+            /** Format: int32 */
+            speech_id: number;
+            /** Format: int32 */
+            user_id: number;
+        };
+        Question: {
+            /** Format: int32 */
+            id: number;
+            question: string;
+            selection: string;
+            answer: string;
+            /** Format: int32 */
+            speech_id: number;
+            /** Format: date-time */
+            start_time: string;
+            /** Format: date-time */
+            end_time: string;
+        };
+        Question_comments: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            question_id: number;
+            /** Format: int32 */
+            user_id: number;
+            comment: string;
         };
     };
     responses: never;
@@ -325,6 +782,57 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    upload: {
+        parameters: {
+            query: {
+                speech_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    createRealtimeMeeting: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RealtimeMeetingRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": Record<string, never>;
+                };
+            };
+        };
+    };
     register: {
         parameters: {
             query?: never;
@@ -359,6 +867,50 @@ export interface operations {
                 "application/json": components["schemas"]["LoginRequest"];
             };
         };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    deleteSpeComment: {
+        parameters: {
+            query: {
+                comment_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    deleteQueComment: {
+        parameters: {
+            query: {
+                comment_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
         responses: {
             /** @description OK */
             200: {
@@ -417,6 +969,30 @@ export interface operations {
             };
         };
     };
+    CreateSubmit: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateSubmitRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
     createSpeech: {
         parameters: {
             query?: never;
@@ -427,6 +1003,30 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CreateSpeechRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    CreateQuestion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateQuestionRequest"];
             };
         };
         responses: {
@@ -465,6 +1065,54 @@ export interface operations {
             };
         };
     };
+    addSpeComment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateSpeCommentRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    addQueComment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateQueCommentRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
     addCourse: {
         parameters: {
             query?: never;
@@ -485,6 +1133,29 @@ export interface operations {
                 };
                 content: {
                     "*/*": number;
+                };
+            };
+        };
+    };
+    judgeSubmit: {
+        parameters: {
+            query: {
+                question_id: number;
+                user_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": boolean;
                 };
             };
         };
@@ -533,6 +1204,51 @@ export interface operations {
             };
         };
     };
+    GetSubmitId: {
+        parameters: {
+            query: {
+                quiz_id: number;
+                user_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    getSubmitById: {
+        parameters: {
+            query: {
+                submit_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Submit"];
+                };
+            };
+        };
+    };
     getSpeeches: {
         parameters: {
             query: {
@@ -573,6 +1289,184 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["Speech"];
+                };
+            };
+        };
+    };
+    getSpeComment: {
+        parameters: {
+            query: {
+                comment_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Speech_comments"];
+                };
+            };
+        };
+    };
+    getSpeAllComments: {
+        parameters: {
+            query: {
+                speech_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Speech_comments"][];
+                };
+            };
+        };
+    };
+    getRateofMine: {
+        parameters: {
+            query: {
+                speech_id: number;
+                user_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    getQuestionList: {
+        parameters: {
+            query: {
+                speech_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Question"][];
+                };
+            };
+        };
+    };
+    getQuestionById: {
+        parameters: {
+            query: {
+                question_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Question"];
+                };
+            };
+        };
+    };
+    getQueComment: {
+        parameters: {
+            query: {
+                comment_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Question_comments"];
+                };
+            };
+        };
+    };
+    getQueAllComments: {
+        parameters: {
+            query: {
+                question_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Question_comments"][];
+                };
+            };
+        };
+    };
+    getNumofRight: {
+        parameters: {
+            query: {
+                speech_id: number;
+                user_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
                 };
             };
         };

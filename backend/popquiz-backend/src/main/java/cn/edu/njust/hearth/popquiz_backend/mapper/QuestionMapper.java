@@ -5,6 +5,7 @@ import cn.edu.njust.hearth.popquiz_backend.entity.Speech;
 import cn.edu.njust.hearth.popquiz_backend.entity.Submit;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Mapper
@@ -31,5 +32,8 @@ public interface QuestionMapper {
 
     @Select("SELECT ANSWER FROM SUBMITS WHERE QUESTION_ID = #{qid} AND USER_ID = #{uid}")
     public char judgingAnswer(@Param("qid") int qid, @Param("uid") int uid);
+
+    @Select("SELECT * FROM SUBMITS WHERE QUESTION_ID = #{qid}")
+    public List<Submit> findSubmitsByQuestionId(@Param("qid") int qid);
 
 }

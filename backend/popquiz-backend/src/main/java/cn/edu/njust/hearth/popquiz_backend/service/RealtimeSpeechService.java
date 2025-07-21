@@ -7,8 +7,10 @@ import com.alibaba.nls.client.protocol.SampleRateEnum;
 import com.alibaba.nls.client.protocol.asr.SpeechTranscriber;
 import com.alibaba.nls.client.protocol.asr.SpeechTranscriberListener;
 import com.alibaba.nls.client.protocol.asr.SpeechTranscriberResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import cn.edu.njust.hearth.popquiz_backend.service.FileService;
 
 import javax.sound.sampled.*;
 import java.io.*;
@@ -22,8 +24,16 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class RealtimeSpeechService {
 
-    @Value("${aliyun.access-key-id}") private String accessKeyId;
-    @Value("${aliyun.access-key-secret}") private String accessKeySecret;
+    private String accessKeyId ;
+    private String accessKeySecret ;
+
+//    @Autowired  // 添加自动注入
+//    public FileService fileService;
+    public FileService  fileService;
+@Autowired
+public void setFileService(FileService fileService) {
+    this.fileService = fileService;
+}
 
     private NlsClient client;
     private SpeechTranscriber transcriber;
@@ -48,13 +58,14 @@ public class RealtimeSpeechService {
     /**
      * 启动实时语音转写
      */
-    public void startRealtimeTranscription() {
+    public void startRealtimeTranscription(int speech_id) {
         try {
             // 初始化客户端（如果未初始化）
             if (client == null) initClient();
 
             // 创建语音识别器
             transcriber = new SpeechTranscriber(client, new SpeechTranscriberListener() {
+                public String text = " ";
                 @Override
                 public void onTranscriberStart(SpeechTranscriberResponse speechTranscriberResponse) {
 
@@ -67,7 +78,8 @@ public class RealtimeSpeechService {
 
                 @Override
                 public void onSentenceEnd(SpeechTranscriberResponse speechTranscriberResponse) {
-
+                    text = text + speechTranscriberResponse.getTransSentenceText();
+                    System.out.println("sentenceEnd,text: " + text);
                 }
 
                 @Override
@@ -79,6 +91,8 @@ public class RealtimeSpeechService {
                 @Override
                 public void onTranscriptionComplete(SpeechTranscriberResponse response) {
                     // 最终识别结果
+                    System.out.println("最终text: " + text);
+                    fileService.appendTextBySpeechID(speech_id,text);
                     System.out.println("最终结果: " + response.getTransSentenceText());
                 }
 
@@ -86,6 +100,10 @@ public class RealtimeSpeechService {
                 public void onFail(SpeechTranscriberResponse response) {
                     System.err.println("识别失败: " + response.getStatusText());
                 }
+
+//                public void onMessage(SpeechTranscriberResponse response) {
+//                    fileService.appendTextBySpeechID(speech_id,text);
+//                }
             });
 
             // 配置识别参数
@@ -195,13 +213,13 @@ public class RealtimeSpeechService {
      * @param filePath WAV 文件路径
      * @param chunkSize 每次读取的字节数（建议 4096 的倍数）
      */
-    public void transcribeWavFileInChunks(String filePath, int chunkSize) {
+    public void transcribeWavFileInChunks(int speech_id, String filePath, int chunkSize) {
         try {
             // 1. 初始化客户端
             if (client == null) initClient();
 
             // 2. 创建语音识别器
-            transcriber = new SpeechTranscriber(client, createListener());
+            transcriber = new SpeechTranscriber(client, createListener(speech_id));
 
             // 3. 配置识别参数
             transcriber.setAppKey("k3jt5KYIJKNxIBvh");
@@ -216,6 +234,7 @@ public class RealtimeSpeechService {
             // 5. 处理 WAV 文件
             processWavFile(filePath, chunkSize);
             //processWavFile(filePath, chunkSize);
+            Thread.sleep(2000); // 等待2秒确保服务端处理完成
 
             // 6. 停止识别器
             transcriber.stop();
@@ -231,8 +250,9 @@ public class RealtimeSpeechService {
     /**
      * 创建监听器
      */
-    private SpeechTranscriberListener createListener() {
+    private SpeechTranscriberListener createListener(int speech_id) {
         return new SpeechTranscriberListener() {
+            public String text = " ";
             @Override
             public void onTranscriptionResultChange(SpeechTranscriberResponse response) {
                 System.out.println("中间结果: " + response.getTransSentenceText());
@@ -240,6 +260,8 @@ public class RealtimeSpeechService {
 
             @Override
             public void onTranscriptionComplete(SpeechTranscriberResponse response) {
+                System.out.println("最终text: " + text);
+                fileService.appendTextBySpeechID(speech_id,text);
                 System.out.println("最终结果: " + response.getTransSentenceText());
             }
 
@@ -251,7 +273,10 @@ public class RealtimeSpeechService {
             // 其他需要的方法可以留空
             @Override public void onTranscriberStart(SpeechTranscriberResponse r) {}
             @Override public void onSentenceBegin(SpeechTranscriberResponse r) {}
-            @Override public void onSentenceEnd(SpeechTranscriberResponse r) {}
+            @Override public void onSentenceEnd(SpeechTranscriberResponse r) {
+                text = text + r.getTransSentenceText();
+                System.out.println("sentenceEnd,text: " + text);
+            }
         };
     }
     /**

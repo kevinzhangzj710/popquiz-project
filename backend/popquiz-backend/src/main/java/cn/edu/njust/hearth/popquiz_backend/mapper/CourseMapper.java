@@ -43,4 +43,6 @@ public interface CourseMapper {
     @Delete("DELETE FROM SPEECHES where COURSE_ID = #{cid} AND SPEAKER_ID = #{uid}")
     int deleteCourse_Teacher(@Param("cid") int cid, @Param("uid") int uid);
 
+    @Select("SELECT ID FROM COURSES WHERE ORGANIZER_ID = #{oid}")
+    Set<Integer> findCoursesByOid(@Param("oid") Integer oid);
 }

@@ -2,9 +2,13 @@ package cn.edu.njust.hearth.popquiz_backend.controller;
 import cn.edu.njust.hearth.popquiz_backend.entity.*;
 import cn.edu.njust.hearth.popquiz_backend.mapper.CourseMapper;
 import cn.edu.njust.hearth.popquiz_backend.mapper.QuestionMapper;
+import cn.edu.njust.hearth.popquiz_backend.mapper.SpeechFileMapper;
 import cn.edu.njust.hearth.popquiz_backend.requestBody.*;
+import cn.edu.njust.hearth.popquiz_backend.service.DeepSeekService;
+import cn.edu.njust.hearth.popquiz_backend.service.FileService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +21,15 @@ import java.util.Set;
 public class QuestionController {
     @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
+    private DeepSeekService deepSeekService;
+
+    @Autowired
+    private SpeechFileMapper speechFileMapper;
+
+    @Autowired
+    private FileService fileService;
 
     @PostMapping("/createQuestion")
     @Operation(summary = "创建一个quiz",description = "创建成功返回quiz的id，失败返回-1")
@@ -114,9 +127,52 @@ public class QuestionController {
         return rate;
     }
 
-//    @GetMapping("getResultOfQuestion")
-//    @Operation(summary = "获取针对某个题目的具体信息",description = "返回该题目的具体信息，封装到一个实体类里面，字段含义依次为：多少人回答了、多少人没回答、多少人答对了、多少人答错了、共有多少人参加了speech、这道题的正确率是多少")
-//    public ResultOfQuestion getResultOfQuestion(@RequestParam int question_id){
+    @GetMapping("getResultOfQuestion")
+    @Operation(summary = "获取针对某个题目的具体信息",description = "返回该题目的具体信息，封装到一个实体类里面，字段含义依次为：多少人回答了、多少人没回答、多少人答对了、多少人答错了、共有多少人参加了speech、这道题的正确率是多少")
+    public ResultOfQuestion getResultOfQuestion(@RequestParam int question_id) {
+        float answerd_cnt = 0;
+        float unanswerd_cnt = 0;
+        float correct_cnt = 0;
+        float wrong_cnt = 0;
+        float total_cnt = 0;
+        float accuracy_cnt = 0;
+        List<Submit> submits = questionMapper.findSubmitsByQuestionId(question_id);
+        for (Submit submit : submits) {
+            if (submit.getAnswer() == 0) {
+                unanswerd_cnt++;
+            } else answerd_cnt++;
+
+            if (judgeSubmit(question_id, submit.getUser_id())) {
+                correct_cnt++;
+            } else wrong_cnt++;
+
+            total_cnt++;
+        }
+        accuracy_cnt = correct_cnt / total_cnt;
+
+        ResultOfQuestion resultOfQuestion = new ResultOfQuestion();
+        resultOfQuestion.setAnsweredCount(answerd_cnt);
+        resultOfQuestion.setUnansweredCount(unanswerd_cnt);
+        resultOfQuestion.setCorrectCount(correct_cnt);
+        resultOfQuestion.setWrongCount(wrong_cnt);
+        resultOfQuestion.setTotalCount(total_cnt);
+        resultOfQuestion.setAccuracyRate(accuracy_cnt);
+
+        return resultOfQuestion;
+    }
+
+
+//    @GetMapping("/generateQuestion")
+//    @Operation(summary = "根据speech_id，查找到录音文本，并生成题目",description = "返回ResponseEntity<String>类型的数据")
+//    public ResponseEntity<String> generateQuestion(@RequestParam int speech_id) {
+//        try {
+//            String content = fileService.getTextBySpeechID(speech_id);
 //
+//            String jsonResult = deepSeekService.generateQuestion(content);
+//            return ResponseEntity.ok(jsonResult);
+//        } catch (Exception e) {
+//            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+//        }
 //    }
+
 }

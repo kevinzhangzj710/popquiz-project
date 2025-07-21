@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -47,6 +48,8 @@ public class CourseController {
     public List<Course> getTeachingCourse(@RequestParam Integer uid) {
         List<Course>courses = new ArrayList<>();
         Set<Integer> courseIds = courseMapper.findCoursesByUid(uid);
+        Set<Integer> else_courseIds = courseMapper.findCoursesByOid(uid);
+        courseIds.addAll(else_courseIds);
         if (courseIds.size() > 0) {
             for (int cid : courseIds)
             {

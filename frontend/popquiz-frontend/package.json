@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "force-build": "tsc --noEmitOnError false && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "gen-api": "openapi-typescript http://localhost:8080/api-doc.yaml -o ./src/api/api-schema.d.ts"

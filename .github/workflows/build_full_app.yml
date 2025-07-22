@@ -1,0 +1,51 @@
+name: Full-App Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '24.0.1'
+
+    - name: Build Frontend
+      working-directory: frontend/popquiz-frontend
+      run: |
+        npm i
+        npm run force-build # by package.json to ignore some warnings
+        
+    - name: Copy frontend dist to backend
+      run: |
+        mkdir -p backend/popquiz-backend/src/main/resources/static
+        cp -r frontend/popquiz-frontend/dist/* backend/popquiz-backend/src/main/resources/static/
+  
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+      
+    - name: Build with Maven
+      run: mvn -B package --file backend/popquiz-backend/pom.xml
+
+    - name: Rename the jar
+      run: mv backend/popquiz-backend/target/popquiz-backend-0.0.1-SNAPSHOT.jar backend/popquiz-backend/target/popquiz-full-app.jar
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: popquiz-full-app
+        path: backend/popquiz-backend/target/popquiz-full-app.jar
+        retention-days: 14

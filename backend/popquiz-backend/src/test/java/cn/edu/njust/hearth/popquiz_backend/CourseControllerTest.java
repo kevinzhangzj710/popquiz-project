@@ -474,6 +474,8 @@ class CourseControllerTest {
         verify(courseMapper, times(1)).insertCourse_Listener(1, 1);
     }
 
+
+
     /**
      * 测试学生添加课程 - 边界情况：课程 ID 不存在
      */
@@ -483,29 +485,6 @@ class CourseControllerTest {
         AddCourseRequest addCourseRequest = new AddCourseRequest();
         addCourseRequest.setUid(1);
         addCourseRequest.setCourse_id(999);
-
-        // 模拟 CourseMapper 的 insertCourse_Listener 方法返回 0，表示插入失败
-        when(courseMapper.insertCourse_Listener(1, 999)).thenReturn(0);
-
-        // 调用 CourseController 的 addCourse 方法
-        int result = courseController.addCourse(addCourseRequest);
-
-        // 验证结果为 0，表示添加失败
-        assertEquals(0, result);
-
-        // 验证 CourseMapper 的 insertCourse_Listener 方法是否被调用
-        verify(courseMapper, times(1)).insertCourse_Listener(1, 999);
-    }
-
-    /**
-     * 测试学生添加课程 - 边界情况：用户 ID 不存在
-     */
-    @Test
-    void testAddCourse_UserIdNotExist() {
-        // 创建 AddCourseRequest 对象，用户 ID 不存在
-        AddCourseRequest addCourseRequest = new AddCourseRequest();
-        addCourseRequest.setUid(999);
-        addCourseRequest.setCourse_id(1);
 
         // 模拟 CourseMapper 的 insertCourse_Listener 方法返回 0，表示插入失败
         when(courseMapper.insertCourse_Listener(999, 1)).thenReturn(0);
@@ -521,6 +500,30 @@ class CourseControllerTest {
     }
 
     /**
+     * 测试学生添加课程 - 边界情况：用户 ID 不存在
+     */
+    @Test
+    void testAddCourse_UserIdNotExist() {
+        // 创建 AddCourseRequest 对象，用户 ID 不存在
+        AddCourseRequest addCourseRequest = new AddCourseRequest();
+        addCourseRequest.setUid(999);
+        addCourseRequest.setCourse_id(1);
+
+        // 模拟 CourseMapper 的 insertCourse_Listener 方法返回 0，表示插入失败
+        // 确保参数顺序和实际调用一致
+        when(courseMapper.insertCourse_Listener(1, 999)).thenReturn(0);
+
+        // 调用 CourseController 的 addCourse 方法
+        int result = courseController.addCourse(addCourseRequest);
+
+        // 验证结果为 0，表示添加失败
+        assertEquals(0, result);
+
+        // 验证 CourseMapper 的 insertCourse_Listener 方法是否被调用
+        verify(courseMapper, times(1)).insertCourse_Listener(1, 999);
+    }
+
+    /**
      * 测试学生添加课程 - 异常情况：课程 ID 为 null
      */
     @Test
@@ -530,6 +533,29 @@ class CourseControllerTest {
         addCourseRequest.setUid(1);
         // 这里假设 CourseController 会处理 null 情况，返回 0
         addCourseRequest.setCourse_id(0);
+
+        // 模拟 CourseMapper 的 insertCourse_Listener 方法不被调用
+        when(courseMapper.insertCourse_Listener(0, 1)).thenReturn(0);
+
+        // 调用 CourseController 的 addCourse 方法
+        int result = courseController.addCourse(addCourseRequest);
+
+        // 验证结果为 0，表示添加失败
+        assertEquals(0, result);
+
+        // 验证 CourseMapper 的 insertCourse_Listener 方法是否被调用
+        verify(courseMapper, times(1)).insertCourse_Listener(0, 1);
+    }
+
+    /**
+     * 测试学生添加课程 - 异常情况：用户 ID 为 null
+     */
+    @Test
+    void testAddCourse_UserIdNull() {
+        // 创建 AddCourseRequest 对象，用户 ID 为 null
+        AddCourseRequest addCourseRequest = new AddCourseRequest();
+        addCourseRequest.setUid(0);
+        addCourseRequest.setCourse_id(1);
 
         // 模拟 CourseMapper 的 insertCourse_Listener 方法不被调用
         when(courseMapper.insertCourse_Listener(1, 0)).thenReturn(0);
@@ -544,26 +570,296 @@ class CourseControllerTest {
         verify(courseMapper, times(1)).insertCourse_Listener(1, 0);
     }
 
+
+
     /**
-     * 测试学生添加课程 - 异常情况：用户 ID 为 null
+     * 测试学生删除所听课程 - 正常情况
      */
     @Test
-    void testAddCourse_UserIdNull() {
-        // 创建 AddCourseRequest 对象，用户 ID 为 null
-        AddCourseRequest addCourseRequest = new AddCourseRequest();
-        addCourseRequest.setUid(0);
-        addCourseRequest.setCourse_id(1);
+    void testDeleteCourse_Listen_NormalCase() {
+        // 创建 DeleteCourseRequest 对象
+        DeleteCourseRequest deleteCourseRequest = new DeleteCourseRequest();
+        deleteCourseRequest.setCourse_id(1);
+        deleteCourseRequest.setUid(1);
 
-        // 模拟 CourseMapper 的 insertCourse_Listener 方法不被调用
-        when(courseMapper.insertCourse_Listener(0, 1)).thenReturn(0);
+        // 调用方法
+        courseController.deleteCourse_Listen(deleteCourseRequest);
 
-        // 调用 CourseController 的 addCourse 方法
-        int result = courseController.addCourse(addCourseRequest);
+        // 验证 CourseMapper 的 deleteCourse_Listener 方法是否被调用
+        verify(courseMapper, times(1)).deleteCourse_Listener(1, 1);
+    }
 
-        // 验证结果为 0，表示添加失败
+    /**
+     * 测试学生删除所听课程 - 课程 ID 为 0
+     */
+    @Test
+    void testDeleteCourse_Listen_CourseIdZero() {
+        DeleteCourseRequest deleteCourseRequest = new DeleteCourseRequest();
+        deleteCourseRequest.setCourse_id(0);
+        deleteCourseRequest.setUid(1);
+
+        courseController.deleteCourse_Listen(deleteCourseRequest);
+
+        verify(courseMapper, times(1)).deleteCourse_Listener(0, 1);
+    }
+
+    /**
+     * 测试学生删除所听课程 - 用户 ID 为 0
+     */
+    @Test
+    void testDeleteCourse_Listen_UserIdZero() {
+        DeleteCourseRequest deleteCourseRequest = new DeleteCourseRequest();
+        deleteCourseRequest.setCourse_id(1);
+        deleteCourseRequest.setUid(0);
+
+        courseController.deleteCourse_Listen(deleteCourseRequest);
+
+        verify(courseMapper, times(1)).deleteCourse_Listener(1, 0);
+    }
+
+    /**
+     * 测试学生删除所听课程 - 课程 ID 和用户 ID 都为 0
+     */
+    @Test
+    void testDeleteCourse_Listen_BothIdsZero() {
+        DeleteCourseRequest deleteCourseRequest = new DeleteCourseRequest();
+        deleteCourseRequest.setCourse_id(0);
+        deleteCourseRequest.setUid(0);
+
+        courseController.deleteCourse_Listen(deleteCourseRequest);
+
+        verify(courseMapper, times(1)).deleteCourse_Listener(0, 0);
+    }
+
+    /**
+     * 测试老师删除所讲课程 - 成功场景
+     */
+    @Test
+    void testDeleteCourse_Teach_Success() {
+        // 创建 DeleteCourseRequest 对象
+        DeleteCourseRequest deleteCourseRequest = new DeleteCourseRequest();
+        deleteCourseRequest.setCourse_id(1);
+        deleteCourseRequest.setUid(1);
+
+        // 模拟 CourseMapper 的 deleteCourse_Teacher 方法返回一个大于 0 的数
+        when(courseMapper.deleteCourse_Teacher(1, 1)).thenReturn(1);
+
+        // 调用方法
+        int result = courseController.deleteCourse_Teach(deleteCourseRequest);
+
+        // 验证结果
+        assertEquals(1, result);
+
+        // 验证 CourseMapper 的 deleteCourse_Teacher 方法是否被调用
+        verify(courseMapper, times(1)).deleteCourse_Teacher(1, 1);
+    }
+
+    /**
+     * 测试老师删除所讲课程 - 失败场景
+     */
+    @Test
+    void testDeleteCourse_Teach_Failure() {
+        // 创建 DeleteCourseRequest 对象
+        DeleteCourseRequest deleteCourseRequest = new DeleteCourseRequest();
+        deleteCourseRequest.setCourse_id(1);
+        deleteCourseRequest.setUid(1);
+
+        // 模拟 CourseMapper 的 deleteCourse_Teacher 方法返回 0
+        when(courseMapper.deleteCourse_Teacher(1, 1)).thenReturn(0);
+
+        // 调用方法
+        int result = courseController.deleteCourse_Teach(deleteCourseRequest);
+
+        // 验证结果
         assertEquals(0, result);
 
-        // 验证 CourseMapper 的 insertCourse_Listener 方法是否被调用
-        verify(courseMapper, times(1)).insertCourse_Listener(0, 1);
+        // 验证 CourseMapper 的 deleteCourse_Teacher 方法是否被调用
+        verify(courseMapper, times(1)).deleteCourse_Teacher(1, 1);
     }
-}
+
+    /**
+     * 测试老师删除所讲课程 - 课程 ID 为 0
+     */
+    @Test
+    void testDeleteCourse_Teach_CourseIdZero() {
+        DeleteCourseRequest deleteCourseRequest = new DeleteCourseRequest();
+        deleteCourseRequest.setCourse_id(0);
+        deleteCourseRequest.setUid(1);
+
+        when(courseMapper.deleteCourse_Teacher(0, 1)).thenReturn(0);
+
+        int result = courseController.deleteCourse_Teach(deleteCourseRequest);
+
+        assertEquals(0, result);
+        verify(courseMapper, times(1)).deleteCourse_Teacher(0, 1);
+    }
+
+    /**
+     * 测试老师删除所讲课程 - 用户 ID 为 0
+     */
+    @Test
+    void testDeleteCourse_Teach_UserIdZero() {
+        DeleteCourseRequest deleteCourseRequest = new DeleteCourseRequest();
+        deleteCourseRequest.setCourse_id(1);
+        deleteCourseRequest.setUid(0);
+
+        when(courseMapper.deleteCourse_Teacher(1, 0)).thenReturn(0);
+
+        int result = courseController.deleteCourse_Teach(deleteCourseRequest);
+
+        assertEquals(0, result);
+        verify(courseMapper, times(1)).deleteCourse_Teacher(1, 0);
+    }
+
+    /**
+     * 测试老师删除所讲课程 - 课程 ID 和用户 ID 都为 0
+     */
+    @Test
+    void testDeleteCourse_Teach_BothIdsZero() {
+        DeleteCourseRequest deleteCourseRequest = new DeleteCourseRequest();
+        deleteCourseRequest.setCourse_id(0);
+        deleteCourseRequest.setUid(0);
+
+        when(courseMapper.deleteCourse_Teacher(0, 0)).thenReturn(0);
+
+        int result = courseController.deleteCourse_Teach(deleteCourseRequest);
+
+        assertEquals(0, result);
+        verify(courseMapper, times(1)).deleteCourse_Teacher(0, 0);
+    }
+
+
+    // 测试通过课程 ID 获取课程 - 正常情况
+    @Test
+    void testGetCourseById_NormalCase1() {
+        // 定义有效的课程 ID
+        int validCourseId = 1;
+
+        // 创建模拟的课程对象
+        Course mockCourse = new Course();
+        mockCourse.setId(validCourseId);
+        mockCourse.setTitle("有效课程标题");
+        mockCourse.setDescription("有效课程描述");
+        mockCourse.setOrganizer_id(1);
+
+        // 模拟 CourseMapper 的 findByCid 方法返回模拟的课程对象
+        when(courseMapper.findByCid(validCourseId)).thenReturn(mockCourse);
+
+        // 调用控制器的 getCourseById 方法
+        Course result = courseController.getCourseById(validCourseId);
+
+        // 验证返回的课程信息是否与模拟的课程对象一致
+        assertEquals(validCourseId, result.id());
+        assertEquals("有效课程标题", result.title());
+        assertEquals("有效课程描述", result.description());
+        assertEquals(1, result.organizer_id());
+
+        // 验证 CourseMapper 的 findByCid 方法是否被调用了一次，且传入的参数为有效的课程 ID
+        verify(courseMapper, times(1)).findByCid(validCourseId);
+    }
+
+    // 测试通过课程 ID 获取课程 - 课程 ID 不存在
+    @Test
+    void testGetCourseById_CourseNotFound1() {
+        // 定义不存在的课程 ID
+        int nonExistentCourseId = 999;
+
+        // 模拟 CourseMapper 的 findByCid 方法返回 null
+        when(courseMapper.findByCid(nonExistentCourseId)).thenReturn(null);
+
+        // 调用控制器的 getCourseById 方法
+        Course result = courseController.getCourseById(nonExistentCourseId);
+
+        // 验证返回的课程信息是否为 null
+        assertNull(result);
+
+        // 验证 CourseMapper 的 findByCid 方法是否被调用了一次，且传入的参数为不存在的课程 ID
+        verify(courseMapper, times(1)).findByCid(nonExistentCourseId);
+    }
+
+    // 测试通过课程 ID 获取课程 - 课程 ID 为无效值
+    @Test
+    void testGetCourseById_InvalidId1() {
+        // 定义无效的课程 ID
+        int invalidCourseId = -1;
+
+        // 模拟 CourseMapper 的 findByCid 方法返回 null
+        when(courseMapper.findByCid(invalidCourseId)).thenReturn(null);
+
+        // 调用控制器的 getCourseById 方法
+        Course result = courseController.getCourseById(invalidCourseId);
+
+        // 验证返回的课程信息是否为 null
+        assertNull(result);
+
+        // 验证 CourseMapper 的 findByCid 方法是否被调用了一次，且传入的参数为无效的课程 ID
+        verify(courseMapper, times(1)).findByCid(invalidCourseId);
+    }
+
+    // 测试通过课时 ID 获取课时 - 正常情况
+    @Test
+    void testGetSpeechById_NormalCase1() {
+        // 定义有效的课时 ID
+        int validSpeechId = 1;
+
+        // 创建模拟的课时对象
+        Speech mockSpeech = new Speech();
+        mockSpeech.setId(validSpeechId);
+        mockSpeech.setTitle("有效课时标题");
+        mockSpeech.setSpeaker_id(1);
+        mockSpeech.setCourse_id(1);
+
+        // 模拟 CourseMapper 的 findSpeechById 方法返回模拟的课时对象
+        when(courseMapper.findSpeechById(validSpeechId)).thenReturn(mockSpeech);
+
+        // 调用控制器的 getSpeechById 方法
+        Speech result = courseController.getSpeechById(validSpeechId);
+
+        // 验证返回的课时信息是否与模拟的课时对象一致
+        assertEquals(validSpeechId, result.id());
+        assertEquals("有效课时标题", result.title());
+        assertEquals(1, result.speaker_id());
+        assertEquals(1, result.course_id());
+
+        // 验证 CourseMapper 的 findSpeechById 方法是否被调用了一次，且传入的参数为有效的课时 ID
+        verify(courseMapper, times(1)).findSpeechById(validSpeechId);
+    }
+
+    // 测试通过课时 ID 获取课时 - 课时 ID 不存在
+    @Test
+    void testGetSpeechById_SpeechNotFound1() {
+        // 定义不存在的课时 ID
+        int nonExistentSpeechId = 999;
+
+        // 模拟 CourseMapper 的 findSpeechById 方法返回 null
+        when(courseMapper.findSpeechById(nonExistentSpeechId)).thenReturn(null);
+
+        // 调用控制器的 getSpeechById 方法
+        Speech result = courseController.getSpeechById(nonExistentSpeechId);
+
+        // 验证返回的课时信息是否为 null
+        assertNull(result);
+
+        // 验证 CourseMapper 的 findSpeechById 方法是否被调用了一次，且传入的参数为不存在的课时 ID
+        verify(courseMapper, times(1)).findSpeechById(nonExistentSpeechId);
+    }
+
+    // 测试通过课时 ID 获取课时 - 课时 ID 为无效值
+    @Test
+    void testGetSpeechById_InvalidId1() {
+        // 定义无效的课时 ID
+        int invalidSpeechId = -1;
+
+        // 模拟 CourseMapper 的 findSpeechById 方法返回 null
+        when(courseMapper.findSpeechById(invalidSpeechId)).thenReturn(null);
+
+        // 调用控制器的 getSpeechById 方法
+        Speech result = courseController.getSpeechById(invalidSpeechId);
+
+        // 验证返回的课时信息是否为 null
+        assertNull(result);
+
+        // 验证 CourseMapper 的 findSpeechById 方法是否被调用了一次，且传入的参数为无效的课时 ID
+        verify(courseMapper, times(1)).findSpeechById(invalidSpeechId);
+    }
+    }

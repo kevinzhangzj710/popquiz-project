@@ -85,7 +85,7 @@ export function CoursePage() {
                                 messageApi.error('创建演讲失败');
                             } else {
                                 messageApi.success(`创建演讲成功，演讲ID：${data}`)
-                                //await fetchSpeeches();
+                                await fetchSpeeches();
                             }
                         }}
                     >

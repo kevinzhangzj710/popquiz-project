@@ -110,6 +110,7 @@ export function CourseList({teaching}: { teaching: boolean }) {
                         messageApi.error('创建课程失败')
                     } else {
                         messageApi.success(`创建课程成功，课程ID：${data}`)
+                        await fetchCourses()
                     }
                 }}
             >

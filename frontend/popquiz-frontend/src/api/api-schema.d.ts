@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/api/tingwu/upload": {
+    "/upload_pdf": {
         parameters: {
             query?: never;
             header?: never;
@@ -13,7 +13,27 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["upload"];
+        post: operations["handleFileUpload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tingwu/uploadVoiceFile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 上传音频文件并解析
+         * @description 不返回任何值
+         */
+        post: operations["uploadVoiceFile"];
         delete?: never;
         options?: never;
         head?: never;
@@ -316,15 +336,18 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/hello-world/{id}": {
+    "/api/getTypeofUser": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** hello world always */
-        get: operations["helloWorld"];
+        /**
+         * 对于给定SpeechID和UserID，判断是不是学生
+         * @description 是学生返回1，是演讲者或者组织者返回0，都不是返回-1
+         */
+        get: operations["GetTypeofUser"];
         put?: never;
         post?: never;
         delete?: never;
@@ -465,6 +488,26 @@ export interface paths {
          * @description 获取成功返回一个评论列表，失败返回空列表
          */
         get: operations["getSpeAllComments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/getResultOfQuestion": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 获取针对某个题目的具体信息
+         * @description 返回该题目的具体信息，封装到一个实体类里面，字段含义依次为：多少人回答了、多少人没回答、多少人答对了、多少人答错了、共有多少人参加了speech、这道题的正确率是多少
+         */
+        get: operations["getResultOfQuestion"];
         put?: never;
         post?: never;
         delete?: never;
@@ -751,6 +794,20 @@ export interface components {
             /** Format: int32 */
             user_id: number;
         };
+        ResultOfQuestion: {
+            /** Format: float */
+            answeredCount: number;
+            /** Format: float */
+            unansweredCount: number;
+            /** Format: float */
+            correctCount: number;
+            /** Format: float */
+            wrongCount: number;
+            /** Format: float */
+            totalCount: number;
+            /** Format: float */
+            accuracyRate: number;
+        };
         Question: {
             /** Format: int32 */
             id: number;
@@ -782,7 +839,36 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    upload: {
+    handleFileUpload: {
+        parameters: {
+            query: {
+                speech_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
+                };
+            };
+        };
+    };
+    uploadVoiceFile: {
         parameters: {
             query: {
                 speech_id: number;
@@ -1160,13 +1246,14 @@ export interface operations {
             };
         };
     };
-    helloWorld: {
+    GetTypeofUser: {
         parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
+            query: {
+                user_id: number;
+                speech_id: number;
             };
+            header?: never;
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -1177,7 +1264,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": string;
+                    "*/*": number;
                 };
             };
         };
@@ -1333,6 +1420,28 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["Speech_comments"][];
+                };
+            };
+        };
+    };
+    getResultOfQuestion: {
+        parameters: {
+            query: {
+                question_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ResultOfQuestion"];
                 };
             };
         };

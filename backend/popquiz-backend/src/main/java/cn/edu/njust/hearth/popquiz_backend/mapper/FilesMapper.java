@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface FilesMapper {
 
@@ -12,6 +14,9 @@ public interface FilesMapper {
     public String findPathBySpeechID(@Param("speechId") Integer speechId);
 
     @Insert("INSERT INTO SPEECH_CONTENT(speech_id, content_path) VALUES (#{speechId},#{contentPath})")
-    public String insert(@Param("speechId") Integer speechId,@Param("contentPath")String contentPath);
+    public void insert(@Param("speechId") Integer speechId,@Param("contentPath")String contentPath);
+
+    @Select("SELECT FILEPATH FROM SPEECH_FILES WHERE SPEECH_ID = #{speech_id}")
+    List<String> findFileBySpeechID(@Param("speech_id") Integer speech_id);
 
 }

@@ -25,7 +25,7 @@ public class FileUploadController {
         this.speechFileService = speechFileService;
     }
 
-    @PostMapping("/upload_pdf")
+    @PostMapping("/upload")
     public String handleFileUpload(
             @RequestParam("file") MultipartFile file,
             @RequestParam("speech_id") int speechId) {

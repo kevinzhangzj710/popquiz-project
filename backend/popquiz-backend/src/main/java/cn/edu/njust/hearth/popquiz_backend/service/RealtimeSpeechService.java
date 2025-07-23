@@ -24,16 +24,19 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class RealtimeSpeechService {
 
-    private String accessKeyId ;
-    private String accessKeySecret ;
+    @Value("${aliyun.access-key-id}") private String accessKeyId;
+    @Value("${aliyun.access-key-secret}") private String accessKeySecret;
 
-//    @Autowired  // 添加自动注入
-//    public FileService fileService;
-    public FileService  fileService;
-@Autowired
-public void setFileService(FileService fileService) {
-    this.fileService = fileService;
-}
+    @Autowired  // 添加自动注入
+    public FileService fileService;
+
+//    public FileService  fileService;
+//@Autowired
+//public void setFileService(FileService fileService) {
+//    this.fileService = fileService;
+//}
+
+    //static FileService fileService;
 
     private NlsClient client;
     private SpeechTranscriber transcriber;
@@ -251,7 +254,11 @@ public void setFileService(FileService fileService) {
      * 创建监听器
      */
     private SpeechTranscriberListener createListener(int speech_id) {
+        System.out.println("1111111111111"+fileService);
         return new SpeechTranscriberListener() {
+            //public FileService fs = fileService;
+
+            public FileService fs=fileService;
             public String text = " ";
             @Override
             public void onTranscriptionResultChange(SpeechTranscriberResponse response) {
@@ -261,7 +268,7 @@ public void setFileService(FileService fileService) {
             @Override
             public void onTranscriptionComplete(SpeechTranscriberResponse response) {
                 System.out.println("最终text: " + text);
-                fileService.appendTextBySpeechID(speech_id,text);
+                fs.appendTextBySpeechID(speech_id,text);
                 System.out.println("最终结果: " + response.getTransSentenceText());
             }
 

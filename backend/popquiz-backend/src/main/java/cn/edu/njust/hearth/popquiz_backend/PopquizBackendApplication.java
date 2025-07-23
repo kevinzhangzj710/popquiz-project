@@ -44,6 +44,8 @@ public class PopquizBackendApplication {
 	void setDBMapper9(DBMapper dbMapper) {
 		dbMapper.createSPEECH_COMMENTS_Table();
 	}
+	@Autowired
+	void setDBMapper10(DBMapper dbMapper) {dbMapper.createSPEECHCONTENTTable();}
 
 	public static void main(String[] args) {
 		SpringApplication.run(PopquizBackendApplication.class, args);

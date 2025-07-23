@@ -1,17 +1,20 @@
 package cn.edu.njust.hearth.popquiz_backend.controller;
 import cn.edu.njust.hearth.popquiz_backend.entity.*;
 import cn.edu.njust.hearth.popquiz_backend.mapper.CourseMapper;
+import cn.edu.njust.hearth.popquiz_backend.mapper.FilesMapper;
 import cn.edu.njust.hearth.popquiz_backend.mapper.QuestionMapper;
 import cn.edu.njust.hearth.popquiz_backend.mapper.SpeechFileMapper;
 import cn.edu.njust.hearth.popquiz_backend.requestBody.*;
-import cn.edu.njust.hearth.popquiz_backend.service.DeepSeekService;
 import cn.edu.njust.hearth.popquiz_backend.service.FileService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -23,13 +26,15 @@ public class QuestionController {
     private QuestionMapper questionMapper;
 
     @Autowired
-    private DeepSeekService deepSeekService;
-
-    @Autowired
     private SpeechFileMapper speechFileMapper;
 
     @Autowired
     private FileService fileService;
+
+    @Autowired
+    private FilesMapper  filesMapper;
+    @Autowired
+    private CourseMapper courseMapper;
 
     @PostMapping("/createQuestion")
     @Operation(summary = "创建一个quiz",description = "创建成功返回quiz的id，失败返回-1")
@@ -127,6 +132,17 @@ public class QuestionController {
         return rate;
     }
 
+    @GetMapping("getRankofMine")
+    @Operation(summary = "获取在本次speech中，我的正确率排名是多少",description = "返回用户的正确率排名（int类型）")
+    public int getRankofMine(@RequestParam int speech_id,@RequestParam int user_id){
+        List<Integer>uids = courseMapper.findListenersBySpeech_id(speech_id);
+        int rank = 1;
+        for(Integer uid : uids) {
+            if(getRateofMine(speech_id,user_id)<getRateofMine(speech_id,uid))rank++;
+        }
+        return rank;
+    }
+
     @GetMapping("getResultOfQuestion")
     @Operation(summary = "获取针对某个题目的具体信息",description = "返回该题目的具体信息，封装到一个实体类里面，字段含义依次为：多少人回答了、多少人没回答、多少人答对了、多少人答错了、共有多少人参加了speech、这道题的正确率是多少")
     public ResultOfQuestion getResultOfQuestion(@RequestParam int question_id) {
@@ -161,18 +177,51 @@ public class QuestionController {
         return resultOfQuestion;
     }
 
+    public static String getTextContent(String urlString) {
+        StringBuilder content = new StringBuilder();
 
+        try {
+            // 创建URL对象并打开连接
+            URL url = new URL(urlString);
+
+            // 使用BufferedReader读取内容（自动处理字符编码）
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(url.openStream(), StandardCharsets.UTF_8))) {
+
+                String line;
+                // 逐行读取内容
+                while ((line = reader.readLine()) != null) {
+                    content.append(line).append("\n"); // 保留换行符
+                }
+            }
+        } catch (IOException e) {
+            // 异常处理（可替换为自定义逻辑）
+            System.err.println("读取文件失败: " + e.getMessage());
+            return "ERROR: " + e.getMessage(); // 返回错误信息
+        }
+
+        return content.toString();
+    }
 //    @GetMapping("/generateQuestion")
-//    @Operation(summary = "根据speech_id，查找到录音文本，并生成题目",description = "返回ResponseEntity<String>类型的数据")
-//    public ResponseEntity<String> generateQuestion(@RequestParam int speech_id) {
-//        try {
-//            String content = fileService.getTextBySpeechID(speech_id);
-//
-//            String jsonResult = deepSeekService.generateQuestion(content);
-//            return ResponseEntity.ok(jsonResult);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+//    @Operation(summary = "根据speech_id，查找到录音、pdf、ppt文本，并生成题目",description = "生成成功返回question实体，失败返回空实体")
+//    public Question generateQuestion(@RequestParam int speech_id) throws IOException {
+//        String content_voice = fileService.getTextBySpeechID(speech_id);//获取音频文件
+//        List<String>urls = filesMapper.findFileBySpeechID(speech_id);
+//        String content_pdf = " ";
+//        for (String url : urls) {
+//            content_pdf = Files.readString(Path.of(url));
 //        }
+//        //System.out.println(content_pdf);
+//        Question question = deepSeekService.generateQuestion(content_pdf, speech_id);
+//        return question;
+//    }
+
+//    @GetMapping("/generateQuestion_Bypdf")
+//    @Operation(summary = "根据speech_id，查找到pdf、ppt文本，并生成题目",description = "生成成功返回question实体，失败返回空实体")
+//    public Question generateQuestionBypdf(@RequestParam int speech_id) {
+//        String content = fileService.getTextBySpeechID(speech_id);
+//        Question question = deepSeekService.generateQuestion(content, speech_id);
+//        return question;
 //    }
 
 }

@@ -27,10 +27,10 @@ public interface QuestionMapper {
     @Select("SELECT ID FROM QUESTIONS WHERE SPEECH_ID = #{sp_id}")
     public Set<Integer> findQuestionIdsBySpeechId(@Param("sp_id") Integer sp_id);
 
-    @Select("SELECT ID FROM SUBMITS WHERE QUESTION_ID = #{qid} AND USER_ID = #{uid}")
+    @Select("SELECT ID FROM SUBMITS WHERE QUESTION_ID = #{qid} AND USER_ID = #{uid} limit 1")
     public Integer getSubmitId(@Param("qid") int qid, @Param("uid") int uid);
 
-    @Select("SELECT ANSWER FROM SUBMITS WHERE QUESTION_ID = #{qid} AND USER_ID = #{uid}")
+    @Select("SELECT ANSWER FROM SUBMITS WHERE QUESTION_ID = #{qid} AND USER_ID = #{uid} limit 1")
     public char judgingAnswer(@Param("qid") int qid, @Param("uid") int uid);
 
     @Select("SELECT * FROM SUBMITS WHERE QUESTION_ID = #{qid}")

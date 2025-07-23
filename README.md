@@ -19,6 +19,10 @@ PopQuiz - using AI to give smart pop quiz about any content, a quick and easy wa
 > **💡 Tip**:  
 > 如果你是评测项目的教师，请联系团队，团队会提供一份用于演示的配置文件，包含所需的云服务相关 API KEY。
 
+需要保证 **ffmpeg** 可执行文件在你的PATH中，或者在该工作目录下。
+对于Windows，只需要一个下载一个预先构建的 **ffmpeg.exe** 到工作目录下即可。
+[推荐下载网址](https://www.gyan.dev/ffmpeg/builds/)
+
 在该工作目录下执行以下命令，这里假设解压出来的 jar 文件名和配置文件名，可以根据实际情况调整。
 
 ```sh
@@ -26,3 +30,20 @@ java -jar popquiz-full-app.jar --spring.config.location="application.properties"
 ```
 
 可以访问 `localhost:8080` 或者 `127.0.0.1:8080` 来访问服务，只要能访问到主机 8080 端口的设备，都可以访问到本服务。
+
+## 目前实现的功能
+
+- 登录注册
+- 组织者新建课程，听众加入课程，听众退出课程
+- 组织者新建演讲
+- 演讲者在演讲中手动创建题目
+- 听众作答题目，看到正确结果
+- 用户在演讲页，题目页提交评论
+
+## 暂未实现的功能
+
+- 上传文档
+- AI生成题目，根据文档和演讲语音
+- 演讲语音实时转文字
+- 教师的统计数据
+- 学生的统计数据

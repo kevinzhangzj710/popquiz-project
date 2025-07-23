@@ -4,7 +4,7 @@ import { useAtomValue } from "jotai";
 import { LoginPage, SignupPage } from "./pages/Login.tsx";
 import { HomePage } from "./pages/Dashboard.tsx";
 import { CoursePage } from "./pages/CoursePage.tsx";
-import { TeacherSpeechPage } from "./pages/SpeechPage.tsx";
+import { SpeechPage } from "./pages/SpeechPage.tsx";
 import {
   StudentQuestionPage,
   TeacherQuestionPage,
@@ -25,11 +25,7 @@ export function MainRouter() {
     <Routes>
       <Route path={"/"} element={<HomePage />} />
       <Route path={"/course/:course_id"} element={<CoursePage />} />
-      <Route path={"/speech/:speech_id"} element={<TeacherSpeechPage />} />
-      <Route
-        path={"/speech/teacher/:speech_id"}
-        element={<TeacherSpeechPage />}
-      />
+      <Route path={"/speech/:speech_id"} element={<SpeechPage />} />
       <Route
         path={"/speech/student/:speech_id"}
         element={<StudentQuestionPage />}

@@ -19,4 +19,7 @@ public interface FilesMapper {
     @Select("SELECT FILEPATH FROM SPEECH_FILES WHERE SPEECH_ID = #{speech_id}")
     List<String> findFileBySpeechID(@Param("speech_id") Integer speech_id);
 
+    @Select("SELECT FILENAME FROM SPEECH_FILES WHERE SPEECH_ID = #{speech_id}")
+    List<String> findFileNamesBySpeechID(@Param("speech_id") Integer speech_id);
+
 }

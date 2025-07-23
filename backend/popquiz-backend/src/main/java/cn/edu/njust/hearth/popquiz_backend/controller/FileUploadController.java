@@ -1,9 +1,12 @@
 package cn.edu.njust.hearth.popquiz_backend.controller;
 
 import cn.edu.njust.hearth.popquiz_backend.entity.Speech_files;
+import cn.edu.njust.hearth.popquiz_backend.mapper.FilesMapper;
 import cn.edu.njust.hearth.popquiz_backend.service.SpeechFileService;
 import cn.edu.njust.hearth.popquiz_backend.tool.FileTextExtractor;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -20,15 +24,18 @@ import java.util.UUID;
 public class FileUploadController {
 
     private final SpeechFileService speechFileService;
+    private final FilesMapper filesMapper;
 
     @Value("${file.storage.location}")
     private String storageLocation;
 
-    public FileUploadController(SpeechFileService speechFileService) {
+    public FileUploadController(SpeechFileService speechFileService, FilesMapper filesMapper) {
         this.speechFileService = speechFileService;
+        this.filesMapper = filesMapper;
     }
 
     @PostMapping("/upload")
+    @Operation(summary = "上传speech的pdf和ppt文件",description = "上传成功返回保存路径，失败返回错误信息")
     public String handleFileUpload(
             @RequestParam("file") MultipartFile file,
             @RequestParam("speech_id") int speechId) {
@@ -71,4 +78,12 @@ public class FileUploadController {
             return e.getMessage();
         }
     }
+
+    @GetMapping("getAllUploads")
+    @Operation(summary = "获取该speech上传的所有文件名",description = "获取成功返回文件名列表，失败返回空列表")
+    public List<String> getAllUploads(@RequestParam int speech_id){
+        List<String>names = filesMapper.findFileNamesBySpeechID(speech_id);
+        return names;
+    }
+
 }

@@ -21,26 +21,26 @@ import java.util.concurrent.ThreadLocalRandom;
 @RequestMapping("/api/tingwu")
 public class TingwuController {
 
-    private final TingwuService tingwuService;
+    //private final TingwuService tingwuService;
     //private FileService fileService;
 
-    @Autowired
-    public TingwuController(TingwuService tingwuService) {
-        this.tingwuService = tingwuService;
-    }
+//    @Autowired
+//    public TingwuController(TingwuService tingwuService) {
+//        this.tingwuService = tingwuService;
+//    }
 
-    @PostMapping("/realtime-meeting")
-    public ResponseEntity<?> createRealtimeMeeting(@RequestBody RealtimeMeetingRequest request) {
-        try {
-            JSONObject result = tingwuService.submitRealtimeMeetingTask(request);
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            JSONObject error = new JSONObject();
-            error.put("error", "Failed to create realtime meeting task");
-            error.put("message", e.getMessage());
-            return ResponseEntity.internalServerError().body(error);
-        }
-    }
+//    @PostMapping("/realtime-meeting")
+//    public ResponseEntity<?> createRealtimeMeeting(@RequestBody RealtimeMeetingRequest request) {
+//        try {
+//            JSONObject result = tingwuService.submitRealtimeMeetingTask(request);
+//            return ResponseEntity.ok(result);
+//        } catch (Exception e) {
+//            JSONObject error = new JSONObject();
+//            error.put("error", "Failed to create realtime meeting task");
+//            error.put("message", e.getMessage());
+//            return ResponseEntity.internalServerError().body(error);
+//        }
+//    }
 
     @Autowired
     public RealtimeSpeechService realtimeSpeechService;

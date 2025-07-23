@@ -144,7 +144,7 @@ public class QuestionController {
     }
 
     @GetMapping("getResultOfQuestion")
-    @Operation(summary = "获取针对某个题目的具体信息",description = "返回该题目的具体信息，封装到一个实体类里面，字段含义依次为：多少人回答了、多少人没回答、多少人答对了、多少人答错了、共有多少人参加了speech、这道题的正确率是多少")
+    @Operation(summary = "获取针对某个题目的统计信息",description = "返回该题目的具体信息，封装到一个实体类里面，字段含义依次为：多少人回答了、多少人没回答、多少人答对了、多少人答错了、共有多少人参加了speech、这道题的正确率是多少")
     public ResultOfQuestion getResultOfQuestion(@RequestParam int question_id) {
         float answerd_cnt = 0;
         float unanswerd_cnt = 0;

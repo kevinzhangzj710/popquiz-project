@@ -31,6 +31,39 @@ java -jar popquiz-full-app.jar --spring.config.location="application.properties"
 
 可以访问 `localhost:8080` 或者 `127.0.0.1:8080` 来访问服务，只要能访问到主机 8080 端口的设备，都可以访问到本服务。
 
+## application.properties配置内容
+
+**基础配置**
+
+spring.application.name=popquiz-backend
+
+spring.datasource.url=jdbc:hsqldb:mydatabase;hsqldb.lock_file=false
+
+spring.datasource.driver-class-name=org.hsqldb.jdbc.JDBCDriver
+
+spring.servlet.multipart.max-file-size=100MB
+
+spring.servlet.multipart.max-request-size=100MB
+
+springdoc.api-docs.path=/api-doc
+
+
+**#aliyun ISI key**
+
+请联系我们获取阿里云密钥
+
+
+**#.txt files of ppt and pdf storage path**
+
+file.storage.location=runtime/pdfFile
+
+
+**#.txt files of voice storage path**
+
+file.upload-dir=${user.dir}/runtime/uploadsVoice
+
+
+
 ## 目前实现的功能
 
 - 登录注册

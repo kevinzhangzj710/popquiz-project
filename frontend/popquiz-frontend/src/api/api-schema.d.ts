@@ -4,1624 +4,1751 @@
  */
 
 export interface paths {
-  "/upload_pdf": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/upload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["handleFileUpload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    post: operations["handleFileUpload"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/tingwu/uploadVoiceFile": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/tingwu/uploadVoiceFile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 上传音频文件并解析
+         * @description 不返回任何值
+         */
+        post: operations["uploadVoiceFile"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * 上传音频文件并解析
-     * @description 不返回任何值
-     */
-    post: operations["uploadVoiceFile"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/tingwu/realtime-meeting": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/tingwu/realtime-meeting": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["createRealtimeMeeting"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    post: operations["createRealtimeMeeting"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/register": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 用户注册
+         * @description 成功与否没有任何返回值
+         */
+        post: operations["register"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * 用户注册
-     * @description 成功与否没有任何返回值
-     */
-    post: operations["register"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/login": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 用户登录
+         * @description 登录成功返回用户ID，失败返回-1。
+         */
+        post: operations["Login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * 用户登录
-     * @description 登录成功返回用户ID，失败返回-1。
-     */
-    post: operations["Login"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/deleteSpeComment": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/deleteSpeComment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 学生删除对某个speech的评论
+         * @description 成功返回一个>0的数表示删掉的记录数，失败返回0
+         */
+        post: operations["deleteSpeComment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * 学生删除对某个speech的评论
-     * @description 成功返回一个>0的数表示删掉的记录数，失败返回0
-     */
-    post: operations["deleteSpeComment"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/deleteQueComment": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/deleteQueComment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 学生删除对某个quiz的评论
+         * @description 成功返回一个>0的数表示删掉的记录数，失败返回0
+         */
+        post: operations["deleteQueComment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * 学生删除对某个quiz的评论
-     * @description 成功返回一个>0的数表示删掉的记录数，失败返回0
-     */
-    post: operations["deleteQueComment"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/deleteCourse_Teach": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/deleteCourse_Teach": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 老师删除所讲的课程
+         * @description 成功返回一个>0的数表示删掉的记录数，失败返回0
+         */
+        post: operations["deleteCourse_Teach"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * 老师删除所讲的课程
-     * @description 成功返回一个>0的数表示删掉的记录数，失败返回0
-     */
-    post: operations["deleteCourse_Teach"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/deleteCourse_Listen": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/deleteCourse_Listen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 学生删除所听的课程
+         * @description 成功/失败不返回信息
+         */
+        post: operations["deleteCourse_Listen"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * 学生删除所听的课程
-     * @description 成功/失败不返回信息
-     */
-    post: operations["deleteCourse_Listen"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/createSubmit": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/createSubmit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 学生提交某个quiz的答案
+         * @description 提交成功返回submit_id,失败返回-1
+         */
+        post: operations["CreateSubmit"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * 学生提交某个quiz的答案
-     * @description 提交成功返回submit_id,失败返回-1
-     */
-    post: operations["CreateSubmit"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/createSpeech": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/createSpeech": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 创建课时
+         * @description 创建成功返回课时id,失败返回-1
+         */
+        post: operations["createSpeech"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * 创建课时
-     * @description 创建成功返回课时id,失败返回-1
-     */
-    post: operations["createSpeech"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/createQuestion": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/createQuestion": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 创建一个quiz
+         * @description 创建成功返回quiz的id，失败返回-1
+         */
+        post: operations["CreateQuestion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * 创建一个quiz
-     * @description 创建成功返回quiz的id，失败返回-1
-     */
-    post: operations["CreateQuestion"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/createCourse": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/createCourse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 创建课程
+         * @description 创建成功返回课程id,失败返回-1
+         */
+        post: operations["createCourse"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * 创建课程
-     * @description 创建成功返回课程id,失败返回-1
-     */
-    post: operations["createCourse"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/addSpeComment": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/addSpeComment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 用户添加对于某个speech的评论
+         * @description 添加成功返回该评论的id，失败返回-1
+         */
+        post: operations["addSpeComment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * 用户添加对于某个speech的评论
-     * @description 添加成功返回该评论的id，失败返回-1
-     */
-    post: operations["addSpeComment"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/addQueComment": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/addQueComment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 用户添加对于某个quiz的评论
+         * @description 添加成功返回该评论的id，失败返回-1
+         */
+        post: operations["addQueComment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * 用户添加对于某个quiz的评论
-     * @description 添加成功返回该评论的id，失败返回-1
-     */
-    post: operations["addQueComment"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/addCourse": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/addCourse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 学生添加课程
+         * @description 成功返回1，失败返回0
+         */
+        post: operations["addCourse"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * 学生添加课程
-     * @description 成功返回1，失败返回0
-     */
-    post: operations["addCourse"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/judgeSubmit": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/tingwu/getTextofVoice": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 获取某个speech所对应的音频txt文件
+         * @description 返回一个字符串，表示解析音频文件之后的文字
+         */
+        get: operations["getTextofVoice"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 判断学生对于某道题目的答案对错（默认学生只能提交一次答案）
-     * @description 若答对返回true，答错返回false
-     */
-    get: operations["judgeSubmit"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getTypeofUser": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/judgeSubmit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 判断学生对于某道题目的答案对错（默认学生只能提交一次答案）
+         * @description 若答对返回true，答错返回false
+         */
+        get: operations["judgeSubmit"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 对于给定SpeechID和UserID，判断是不是学生
-     * @description 是学生返回1，是演讲者或者组织者返回0，都不是返回-1
-     */
-    get: operations["GetTypeofUser"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getTeachingCourse": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/getTypeofUser": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 对于给定SpeechID和UserID，判断是不是学生
+         * @description 是学生返回1，是演讲者或者组织者返回0，都不是返回-1
+         */
+        get: operations["GetTypeofUser"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 获取该用户所讲的课程（不包括课时）
-     * @description 获取成功返回课程列表，失败返回空列表
-     */
-    get: operations["getTeachingCourse"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getSubmitId": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/getTeachingCourse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 获取该用户所讲的课程（不包括课时）
+         * @description 获取成功返回课程列表，失败返回空列表
+         */
+        get: operations["getTeachingCourse"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 通过quiz的id和学生的id，获取到学生对于该quiz的submit_id
-     * @description 提交成功返回submit_id,失败返回-1
-     */
-    get: operations["GetSubmitId"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getSubmitById": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/getSubmitId": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 通过quiz的id和学生的id，获取到学生对于该quiz的submit_id
+         * @description 提交成功返回submit_id,失败返回-1
+         */
+        get: operations["GetSubmitId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 通过submit的id获取该submit
-     * @description 获取成功返回submit实体，失败返回空实体
-     */
-    get: operations["getSubmitById"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getSpeeches": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/getSubmitById": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 通过submit的id获取该submit
+         * @description 获取成功返回submit实体，失败返回空实体
+         */
+        get: operations["getSubmitById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 获取某课程的所有课时
-     * @description 获取成功返回课时列表，失败返回空列表
-     */
-    get: operations["getSpeeches"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getSpeechById": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/getSpeeches": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 获取某课程的所有课时
+         * @description 获取成功返回课时列表，失败返回空列表
+         */
+        get: operations["getSpeeches"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 通过课时id获取该课时
-     * @description 获取成功返回课时实体，失败返回空实体
-     */
-    get: operations["getSpeechById"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getSpeComment": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/getSpeechById": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 通过课时id获取该课时
+         * @description 获取成功返回课时实体，失败返回空实体
+         */
+        get: operations["getSpeechById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 根据某个speech评论的id获取该评论
-     * @description 添加成功返回该评论的实体，失败返回空实体
-     */
-    get: operations["getSpeComment"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getSpeAllComments": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/getSpeComment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 根据某个speech评论的id获取该评论
+         * @description 添加成功返回该评论的实体，失败返回空实体
+         */
+        get: operations["getSpeComment"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 根据speech的id获取该场speech的全部用户的评论
-     * @description 获取成功返回一个评论列表，失败返回空列表
-     */
-    get: operations["getSpeAllComments"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getResultOfQuestion": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/getSpeAllComments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 根据speech的id获取该场speech的全部用户的评论
+         * @description 获取成功返回一个评论列表，失败返回空列表
+         */
+        get: operations["getSpeAllComments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 获取针对某个题目的具体信息
-     * @description 返回该题目的具体信息，封装到一个实体类里面，字段含义依次为：多少人回答了、多少人没回答、多少人答对了、多少人答错了、共有多少人参加了speech、这道题的正确率是多少
-     */
-    get: operations["getResultOfQuestion"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getRateofMine": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/getResultOfQuestion": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 获取针对某个题目的具体信息
+         * @description 返回该题目的具体信息，封装到一个实体类里面，字段含义依次为：多少人回答了、多少人没回答、多少人答对了、多少人答错了、共有多少人参加了speech、这道题的正确率是多少
+         */
+        get: operations["getResultOfQuestion"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 获取在本次speech中，我对所有题目的作答正确率是多少
-     * @description 返回用户所答的正确率（用浮点数表示）
-     */
-    get: operations["getRateofMine"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getQuestionList": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/getRateofMine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 获取在本次speech中，我对所有题目的作答正确率是多少
+         * @description 返回用户所答的正确率（用浮点数表示）
+         */
+        get: operations["getRateofMine"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 通过speech_id获取该课时的所有quiz
-     * @description 获取成功返回问题列表，失败返回空列表
-     */
-    get: operations["getQuestionList"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getQuestionById": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/getRankofMine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 获取在本次speech中，我的正确率排名是多少
+         * @description 返回用户的正确率排名（int类型）
+         */
+        get: operations["getRankofMine"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 通过问题的id获取该问题
-     * @description 获取成功返回问题实体，失败返回空实体
-     */
-    get: operations["getQuestionById"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getQueComment": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/getQuestionList": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 通过speech_id获取该课时的所有quiz
+         * @description 获取成功返回问题列表，失败返回空列表
+         */
+        get: operations["getQuestionList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 根据某个问题评论的id获取该评论
-     * @description 添加成功返回该评论的实体，失败返回空实体
-     */
-    get: operations["getQueComment"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getQueAllComments": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/getQuestionById": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 通过问题的id获取该问题
+         * @description 获取成功返回问题实体，失败返回空实体
+         */
+        get: operations["getQuestionById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 根据quiz的id获取该quiz的全部用户的评论
-     * @description 获取成功返回一个评论列表，失败返回空列表
-     */
-    get: operations["getQueAllComments"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getNumofRight": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/getQueComment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 根据某个问题评论的id获取该评论
+         * @description 添加成功返回该评论的实体，失败返回空实体
+         */
+        get: operations["getQueComment"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 获取在本次speech中，我答对了多少题
-     * @description 返回答对题目的数量
-     */
-    get: operations["getNumofRight"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getListeningCourse": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/getQueAllComments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 根据quiz的id获取该quiz的全部用户的评论
+         * @description 获取成功返回一个评论列表，失败返回空列表
+         */
+        get: operations["getQueAllComments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 获取该用户所听的课程（不包含课时）
-     * @description 获取成功返回课程列表，失败返回空列表
-     */
-    get: operations["getListeningCourse"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/getCourseById": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/getNumofRight": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 获取在本次speech中，我答对了多少题
+         * @description 返回答对题目的数量
+         */
+        get: operations["getNumofRight"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * 通过课程id获取该课程
-     * @description 获取成功返回课程实体，失败返回空实体
-     */
-    get: operations["getCourseById"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
+    "/api/getListeningCourse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 获取该用户所听的课程（不包含课时）
+         * @description 获取成功返回课程列表，失败返回空列表
+         */
+        get: operations["getListeningCourse"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/getCourseById": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 通过课程id获取该课程
+         * @description 获取成功返回课程实体，失败返回空实体
+         */
+        get: operations["getCourseById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/generateQue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 根据speech_id，查找到录音、pdf、ppt文本，并生成题目
+         * @description 生成成功返回question实体，失败返回空实体
+         */
+        get: operations["generateQuestion"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    RealtimeMeetingRequest: {
-      sourceLanguage?: string;
-      format?: string;
-      /** Format: int32 */
-      sampleRate?: number;
-      diarizationEnabled?: boolean;
-      /** Format: int32 */
-      speakerCount?: number;
-      translationEnabled?: boolean;
-      targetLanguages?: string[];
-      summarizationEnabled?: boolean;
-      summarizationTypes?: string[];
+    schemas: {
+        RealtimeMeetingRequest: {
+            sourceLanguage?: string;
+            format?: string;
+            /** Format: int32 */
+            sampleRate?: number;
+            diarizationEnabled?: boolean;
+            /** Format: int32 */
+            speakerCount?: number;
+            translationEnabled?: boolean;
+            targetLanguages?: string[];
+            summarizationEnabled?: boolean;
+            summarizationTypes?: string[];
+        };
+        RegisterRequest: {
+            username?: string;
+            password?: string;
+            name?: string;
+        };
+        LoginRequest: {
+            username?: string;
+            password?: string;
+        };
+        DeleteCourseRequest: {
+            /** Format: int32 */
+            uid?: number;
+            /** Format: int32 */
+            course_id?: number;
+        };
+        CreateSubmitRequest: {
+            /** Format: int32 */
+            question_id: number;
+            /** Format: int32 */
+            user_id: number;
+            answer: string;
+        };
+        CreateSpeechRequest: {
+            title?: string;
+            /** Format: int32 */
+            speaker_id?: number;
+            /** Format: int32 */
+            course_id?: number;
+        };
+        CreateQuestionRequest: {
+            question: string;
+            selection: string;
+            answer: string;
+            /** Format: int32 */
+            speech_id: number;
+            /** Format: date-time */
+            start_time: string;
+            /** Format: date-time */
+            end_time: string;
+        };
+        CreateCourseRequest: {
+            title?: string;
+            description?: string;
+            /** Format: int32 */
+            organizer_id?: number;
+        };
+        CreateSpeCommentRequest: {
+            comment: string;
+            /** Format: int32 */
+            speech_id: number;
+            /** Format: int32 */
+            user_id: number;
+        };
+        CreateQueCommentRequest: {
+            /** Format: int32 */
+            question_id: number;
+            /** Format: int32 */
+            user_id: number;
+            comment: string;
+        };
+        AddCourseRequest: {
+            /** Format: int32 */
+            uid?: number;
+            /** Format: int32 */
+            course_id?: number;
+        };
+        Course: {
+            /** Format: int32 */
+            id: number;
+            title: string;
+            description: string;
+            /** Format: int32 */
+            organizer_id: number;
+        };
+        Submit: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            question_id: number;
+            /** Format: int32 */
+            user_id: number;
+            answer: string;
+        };
+        Speech: {
+            /** Format: int32 */
+            id: number;
+            title: string;
+            /** Format: int32 */
+            speaker_id: number;
+            /** Format: int32 */
+            course_id: number;
+        };
+        Speech_comments: {
+            /** Format: int32 */
+            id: number;
+            comment: string;
+            /** Format: int32 */
+            speech_id: number;
+            /** Format: int32 */
+            user_id: number;
+        };
+        ResultOfQuestion: {
+            /** Format: float */
+            answeredCount: number;
+            /** Format: float */
+            unansweredCount: number;
+            /** Format: float */
+            correctCount: number;
+            /** Format: float */
+            wrongCount: number;
+            /** Format: float */
+            totalCount: number;
+            /** Format: float */
+            accuracyRate: number;
+        };
+        Question: {
+            /** Format: int32 */
+            id: number;
+            question: string;
+            selection: string;
+            answer: string;
+            /** Format: int32 */
+            speech_id: number;
+            /** Format: date-time */
+            start_time: string;
+            /** Format: date-time */
+            end_time: string;
+        };
+        Question_comments: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            question_id: number;
+            /** Format: int32 */
+            user_id: number;
+            comment: string;
+        };
     };
-    RegisterRequest: {
-      username?: string;
-      password?: string;
-      name?: string;
-    };
-    LoginRequest: {
-      username?: string;
-      password?: string;
-    };
-    DeleteCourseRequest: {
-      /** Format: int32 */
-      uid?: number;
-      /** Format: int32 */
-      course_id?: number;
-    };
-    CreateSubmitRequest: {
-      /** Format: int32 */
-      question_id: number;
-      /** Format: int32 */
-      user_id: number;
-      answer: string;
-    };
-    CreateSpeechRequest: {
-      title?: string;
-      /** Format: int32 */
-      speaker_id?: number;
-      /** Format: int32 */
-      course_id?: number;
-    };
-    CreateQuestionRequest: {
-      question: string;
-      selection: string;
-      answer: string;
-      /** Format: int32 */
-      speech_id: number;
-      /** Format: date-time */
-      start_time: string;
-      /** Format: date-time */
-      end_time: string;
-    };
-    CreateCourseRequest: {
-      title?: string;
-      description?: string;
-      /** Format: int32 */
-      organizer_id?: number;
-    };
-    CreateSpeCommentRequest: {
-      comment: string;
-      /** Format: int32 */
-      speech_id: number;
-      /** Format: int32 */
-      user_id: number;
-    };
-    CreateQueCommentRequest: {
-      /** Format: int32 */
-      question_id: number;
-      /** Format: int32 */
-      user_id: number;
-      comment: string;
-    };
-    AddCourseRequest: {
-      /** Format: int32 */
-      uid?: number;
-      /** Format: int32 */
-      course_id?: number;
-    };
-    Course: {
-      /** Format: int32 */
-      id: number;
-      title: string;
-      description: string;
-      /** Format: int32 */
-      organizer_id: number;
-    };
-    Submit: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      question_id: number;
-      /** Format: int32 */
-      user_id: number;
-      answer: string;
-    };
-    Speech: {
-      /** Format: int32 */
-      id: number;
-      title: string;
-      /** Format: int32 */
-      speaker_id: number;
-      /** Format: int32 */
-      course_id: number;
-    };
-    Speech_comments: {
-      /** Format: int32 */
-      id: number;
-      comment: string;
-      /** Format: int32 */
-      speech_id: number;
-      /** Format: int32 */
-      user_id: number;
-    };
-    ResultOfQuestion: {
-      /** Format: float */
-      answeredCount: number;
-      /** Format: float */
-      unansweredCount: number;
-      /** Format: float */
-      correctCount: number;
-      /** Format: float */
-      wrongCount: number;
-      /** Format: float */
-      totalCount: number;
-      /** Format: float */
-      accuracyRate: number;
-    };
-    Question: {
-      /** Format: int32 */
-      id: number;
-      question: string;
-      selection: string;
-      answer: string;
-      /** Format: int32 */
-      speech_id: number;
-      /** Format: date-time */
-      start_time: string;
-      /** Format: date-time */
-      end_time: string;
-    };
-    Question_comments: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      question_id: number;
-      /** Format: int32 */
-      user_id: number;
-      comment: string;
-    };
-  };
-  responses: never;
-  parameters: never;
-  requestBodies: never;
-  headers: never;
-  pathItems: never;
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-  handleFileUpload: {
-    parameters: {
-      query: {
-        speech_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: {
-      content: {
-        "application/json": {
-          /** Format: binary */
-          file: string;
-        };
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": string;
-        };
-      };
-    };
-  };
-  uploadVoiceFile: {
-    parameters: {
-      query: {
-        speech_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: {
-      content: {
-        "application/json": {
-          /** Format: binary */
-          file: string;
-        };
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  createRealtimeMeeting: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["RealtimeMeetingRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  register: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["RegisterRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  Login: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["LoginRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": number;
-        };
-      };
-    };
-  };
-  deleteSpeComment: {
-    parameters: {
-      query: {
-        comment_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": number;
-        };
-      };
-    };
-  };
-  deleteQueComment: {
-    parameters: {
-      query: {
-        comment_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": number;
-        };
-      };
-    };
-  };
-  deleteCourse_Teach: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["DeleteCourseRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": number;
-        };
-      };
-    };
-  };
-  deleteCourse_Listen: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["DeleteCourseRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  CreateSubmit: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["CreateSubmitRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": number;
-        };
-      };
-    };
-  };
-  createSpeech: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["CreateSpeechRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": number;
-        };
-      };
-    };
-  };
-  CreateQuestion: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["CreateQuestionRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": number;
-        };
-      };
-    };
-  };
-  createCourse: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["CreateCourseRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": number;
-        };
-      };
-    };
-  };
-  addSpeComment: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["CreateSpeCommentRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": number;
-        };
-      };
-    };
-  };
-  addQueComment: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["CreateQueCommentRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": number;
-        };
-      };
-    };
-  };
-  addCourse: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["AddCourseRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": number;
-        };
-      };
-    };
-  };
-  judgeSubmit: {
-    parameters: {
-      query: {
-        question_id: number;
-        user_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": boolean;
-        };
-      };
-    };
-  };
-  GetTypeofUser: {
-    parameters: {
-      query: {
-        user_id: number;
-        speech_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": number;
-        };
-      };
-    };
-  };
-  getTeachingCourse: {
-    parameters: {
-      query: {
-        uid: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["Course"][];
-        };
-      };
-    };
-  };
-  GetSubmitId: {
-    parameters: {
-      query: {
-        quiz_id: number;
-        user_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": number;
-        };
-      };
-    };
-  };
-  getSubmitById: {
-    parameters: {
-      query: {
-        submit_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["Submit"];
-        };
-      };
-    };
-  };
-  getSpeeches: {
-    parameters: {
-      query: {
-        courseid: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["Speech"][];
-        };
-      };
-    };
-  };
-  getSpeechById: {
-    parameters: {
-      query: {
-        speech_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["Speech"];
-        };
-      };
-    };
-  };
-  getSpeComment: {
-    parameters: {
-      query: {
-        comment_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["Speech_comments"];
-        };
-      };
-    };
-  };
-  getSpeAllComments: {
-    parameters: {
-      query: {
-        speech_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["Speech_comments"][];
-        };
-      };
-    };
-  };
-  getResultOfQuestion: {
-    parameters: {
-      query: {
-        question_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["ResultOfQuestion"];
-        };
-      };
-    };
-  };
-  getRateofMine: {
-    parameters: {
-      query: {
-        speech_id: number;
-        user_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": number;
-        };
-      };
-    };
-  };
-  getQuestionList: {
-    parameters: {
-      query: {
-        speech_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["Question"][];
-        };
-      };
-    };
-  };
-  getQuestionById: {
-    parameters: {
-      query: {
-        question_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["Question"];
-        };
-      };
-    };
-  };
-  getQueComment: {
-    parameters: {
-      query: {
-        comment_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["Question_comments"];
-        };
-      };
-    };
-  };
-  getQueAllComments: {
-    parameters: {
-      query: {
-        question_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["Question_comments"][];
-        };
-      };
-    };
-  };
-  getNumofRight: {
-    parameters: {
-      query: {
-        speech_id: number;
-        user_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": number;
-        };
-      };
-    };
-  };
-  getListeningCourse: {
-    parameters: {
-      query: {
-        uid: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["Course"][];
-        };
-      };
-    };
-  };
-  getCourseById: {
-    parameters: {
-      query: {
-        course_id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["Course"];
-        };
-      };
-    };
-  };
+    handleFileUpload: {
+        parameters: {
+            query: {
+                speech_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
+                };
+            };
+        };
+    };
+    uploadVoiceFile: {
+        parameters: {
+            query: {
+                speech_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    createRealtimeMeeting: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RealtimeMeetingRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": Record<string, never>;
+                };
+            };
+        };
+    };
+    register: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegisterRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    Login: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    deleteSpeComment: {
+        parameters: {
+            query: {
+                comment_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    deleteQueComment: {
+        parameters: {
+            query: {
+                comment_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    deleteCourse_Teach: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeleteCourseRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    deleteCourse_Listen: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeleteCourseRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CreateSubmit: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateSubmitRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    createSpeech: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateSpeechRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    CreateQuestion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateQuestionRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    createCourse: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateCourseRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    addSpeComment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateSpeCommentRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    addQueComment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateQueCommentRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    addCourse: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddCourseRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    getTextofVoice: {
+        parameters: {
+            query: {
+                speech_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
+                };
+            };
+        };
+    };
+    judgeSubmit: {
+        parameters: {
+            query: {
+                question_id: number;
+                user_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": boolean;
+                };
+            };
+        };
+    };
+    GetTypeofUser: {
+        parameters: {
+            query: {
+                user_id: number;
+                speech_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    getTeachingCourse: {
+        parameters: {
+            query: {
+                uid: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Course"][];
+                };
+            };
+        };
+    };
+    GetSubmitId: {
+        parameters: {
+            query: {
+                quiz_id: number;
+                user_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    getSubmitById: {
+        parameters: {
+            query: {
+                submit_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Submit"];
+                };
+            };
+        };
+    };
+    getSpeeches: {
+        parameters: {
+            query: {
+                courseid: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Speech"][];
+                };
+            };
+        };
+    };
+    getSpeechById: {
+        parameters: {
+            query: {
+                speech_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Speech"];
+                };
+            };
+        };
+    };
+    getSpeComment: {
+        parameters: {
+            query: {
+                comment_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Speech_comments"];
+                };
+            };
+        };
+    };
+    getSpeAllComments: {
+        parameters: {
+            query: {
+                speech_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Speech_comments"][];
+                };
+            };
+        };
+    };
+    getResultOfQuestion: {
+        parameters: {
+            query: {
+                question_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ResultOfQuestion"];
+                };
+            };
+        };
+    };
+    getRateofMine: {
+        parameters: {
+            query: {
+                speech_id: number;
+                user_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    getRankofMine: {
+        parameters: {
+            query: {
+                speech_id: number;
+                user_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    getQuestionList: {
+        parameters: {
+            query: {
+                speech_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Question"][];
+                };
+            };
+        };
+    };
+    getQuestionById: {
+        parameters: {
+            query: {
+                question_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Question"];
+                };
+            };
+        };
+    };
+    getQueComment: {
+        parameters: {
+            query: {
+                comment_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Question_comments"];
+                };
+            };
+        };
+    };
+    getQueAllComments: {
+        parameters: {
+            query: {
+                question_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Question_comments"][];
+                };
+            };
+        };
+    };
+    getNumofRight: {
+        parameters: {
+            query: {
+                speech_id: number;
+                user_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    getListeningCourse: {
+        parameters: {
+            query: {
+                uid: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Course"][];
+                };
+            };
+        };
+    };
+    getCourseById: {
+        parameters: {
+            query: {
+                course_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Course"];
+                };
+            };
+        };
+    };
+    generateQuestion: {
+        parameters: {
+            query: {
+                speech_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Question"];
+                };
+            };
+        };
+    };
 }

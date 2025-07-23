@@ -1,11 +1,19 @@
-import { data, useParams } from "react-router";
+import { useParams } from "react-router";
 import { HomePageLayout } from "./Dashboard.tsx";
 import { ErrorBack } from "../ui/utils.tsx";
 import { type speech_data } from "../ui/Speeches.tsx";
 import { useAtomValue } from "jotai/index";
 import { user_id_atom } from "../states/user.ts";
 import { useEffect, useState } from "react";
-import { Button, Divider, List, message, Space, Typography } from "antd";
+import {
+  Button,
+  Divider,
+  List,
+  message,
+  Space,
+  Typography,
+  Upload,
+} from "antd";
 import { type comment_data, CommentList } from "../ui/Comments.tsx";
 import { $fetch } from "../api/api-utils.ts";
 import { Recorder } from "../ui/Recorder.tsx";
@@ -18,6 +26,7 @@ import {
   ProFormTimePicker,
 } from "@ant-design/pro-components";
 import dayjs from "dayjs";
+import { UploadOutlined } from "@ant-design/icons";
 
 export function SpeechPage() {
   const { speech_id } = useParams();
@@ -66,6 +75,7 @@ export function SpeechPage() {
     />
   );
 }
+
 function TeacherSpeechPage() {
   const { speech_id } = useParams();
   const s_id = parseInt(speech_id ? speech_id : "-1");
@@ -172,6 +182,22 @@ function TeacherSpeechPage() {
               {speech.speaker_id === user_id && (
                 <>
                   <Divider />
+                  <>FILELIST</>
+                  <Upload
+                    name={"file"}
+                    action={"/api/upload"}
+                    accept={".pdf,.ppt,.pptx"}
+                    method={"POST"}
+                    data={{
+                      speech_id: s_id,
+                    }}
+                  >
+                    <Button>
+                      <UploadOutlined />
+                      点击上传文档
+                    </Button>
+                  </Upload>
+                  <Divider />
                   <Recorder speech_id={speech.id} />
                 </>
               )}
@@ -239,7 +265,20 @@ function TeacherSpeechPage() {
                 trigger={<Button>AI生成题目</Button>}
                 onFinish={async (formData) => {
                   console.log(formData);
-                  // TODO lack of API
+                  const { data, error } = await $fetch.GET("/api/generateQue", {
+                    params: {
+                      query: {
+                        speech_id: s_id,
+                      },
+                    },
+                  });
+                  if (error || !data) {
+                    console.log(error);
+                    messageApi.error("AI生成题目出错");
+                  } else {
+                    messageApi.success(`AI生成题目成功，题目ID：${data.id}`);
+                    await fetchQuestions();
+                  }
                 }}
               >
                 <ProFormDigit
@@ -313,6 +352,7 @@ function StudentSpeechPage() {
   const [comments, setComments] = useState<comment_data[]>([]);
   const [numOfRight, setNumOfRight] = useState<number>(0);
   const [rateOfMine, setRateOfMine] = useState<number>(0.0);
+  const [rankOfMine, setRankOfMine] = useState<number>(1);
 
   async function fetchRole() {
     const { data, error } = await $fetch.GET("/api/getTypeofUser", {
@@ -409,6 +449,16 @@ function StudentSpeechPage() {
     } else {
       setRateOfMine(res2.data);
     }
+    const res3 = await $fetch.GET("/api/getRankofMine", {
+      params: {
+        query: { speech_id: s_id, user_id },
+      },
+    });
+    if (res3.error) {
+      messageApi.error("获取统计数据失败");
+    } else {
+      setRankOfMine(res3.data);
+    }
   }
 
   useEffect(() => {
@@ -437,6 +487,7 @@ function StudentSpeechPage() {
           <Space size={"large"}>
             <Typography>一共作对了{numOfRight}题</Typography>
             <Typography>正确率：{rateOfMine * 100}%</Typography>
+            <Typography>正确率排名：第{rankOfMine}名</Typography>
           </Space>
           <Divider />
           <Typography.Title level={2}>小测验列表：</Typography.Title>

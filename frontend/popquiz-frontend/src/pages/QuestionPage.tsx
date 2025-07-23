@@ -3,11 +3,12 @@ import { useParams } from "react-router";
 import { ErrorBack } from "../ui/utils.tsx";
 import { QuestionShowcase, type question_data } from "../ui/Questions.tsx";
 import { useEffect, useState } from "react";
-import { Button, message, Radio, Typography } from "antd";
+import { Button, Divider, message, Radio, Typography } from "antd";
 import { $fetch } from "../api/api-utils.ts";
 import dayjs from "dayjs";
 import { useAtomValue } from "jotai";
 import { user_id_atom } from "../states/user.ts";
+import { CommentList, type comment_data } from "../ui/Comments.tsx";
 
 export function QuestionPage() {
   const { question_id } = useParams();
@@ -27,6 +28,7 @@ export function TeacherQuestionPage() {
   const user_id = useAtomValue(user_id_atom);
   const [question, setQuestion] = useState<question_data>();
   const [messageApi, contextHolder] = message.useMessage();
+  const [comments, setComments] = useState<comment_data[]>([]);
 
   async function fetchQuestion() {
     const question_id = q_id;
@@ -41,6 +43,23 @@ export function TeacherQuestionPage() {
       messageApi.error("获取题目出错");
     } else {
       setQuestion(data);
+    }
+  }
+
+  async function fetchComment() {
+    const question_id = q_id;
+    const { data, error } = await $fetch.GET("/api/getQueAllComments", {
+      params: {
+        query: {
+          question_id,
+        },
+      },
+    });
+    if (error) {
+      console.log(error);
+      messageApi.error("获取评论失败");
+    } else {
+      setComments(data);
     }
   }
 
@@ -81,6 +100,32 @@ export function TeacherQuestionPage() {
                     label: answer,
                   }))}
                 />
+                <Divider />
+                {/* 统计数据缺失 */}
+                <Divider />
+                <CommentList
+                  dataSource={comments}
+                  onSubmit={async (value) => {
+                    const question_id = q_id;
+                    const { data, error } = await $fetch.POST(
+                      "/api/addQueComment",
+                      {
+                        body: {
+                          question_id,
+                          user_id,
+                          comment: value,
+                        },
+                      },
+                    );
+                    if (error || data === -1) {
+                      messageApi.error("发表评论失败");
+                      return;
+                    } else {
+                      messageApi.success(`发表评论成功`);
+                      await fetchComment();
+                    }
+                  }}
+                />
               </>
             )}
           </>
@@ -97,6 +142,7 @@ export function StudentQuestionPage() {
   const [question, setQuestion] = useState<question_data>();
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [selected, setSelected] = useState<string>("");
+  const [comments, setComments] = useState<comment_data[]>([]);
   const [messageApi, contextHolder] = message.useMessage();
 
   async function fetchQuestion() {
@@ -114,8 +160,11 @@ export function StudentQuestionPage() {
     } else {
       setQuestion(data);
     }
-    fetchSubmittion();
   }
+
+  useEffect(() => {
+    fetchSubmittion();
+  }, [question]);
 
   async function fetchSubmittion() {
     const question_id = q_id;
@@ -170,9 +219,26 @@ export function StudentQuestionPage() {
     messageApi.success("提交成功");
     setSubmitted(true);
   }
+  async function fetchComment() {
+    const question_id = q_id;
+    const { data, error } = await $fetch.GET("/api/getQueAllComments", {
+      params: {
+        query: {
+          question_id,
+        },
+      },
+    });
+    if (error) {
+      console.log(error);
+      messageApi.error("获取评论失败");
+    } else {
+      setComments(data);
+    }
+  }
 
   useEffect(() => {
     fetchQuestion();
+    fetchComment();
   }, [question_id, user_id]);
 
   return (
@@ -225,6 +291,34 @@ export function StudentQuestionPage() {
                 >
                   提交
                 </Button>
+                {submitted && (
+                  <>
+                    <Divider />
+                    <CommentList
+                      dataSource={comments}
+                      onSubmit={async (value) => {
+                        const question_id = q_id;
+                        const { data, error } = await $fetch.POST(
+                          "/api/addQueComment",
+                          {
+                            body: {
+                              question_id,
+                              user_id,
+                              comment: value,
+                            },
+                          },
+                        );
+                        if (error || data === -1) {
+                          messageApi.error("发表评论失败");
+                          return;
+                        } else {
+                          messageApi.success(`发表评论成功`);
+                          await fetchComment();
+                        }
+                      }}
+                    />
+                  </>
+                )}
               </>
             )}
           </>

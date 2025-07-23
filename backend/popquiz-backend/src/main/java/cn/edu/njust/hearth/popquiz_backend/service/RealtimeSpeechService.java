@@ -24,8 +24,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class RealtimeSpeechService {
 
-     //这里value注入application.properties的阿里云accessKeyId
-     //这里value注入application.properties的阿里云accessKeySecret
+    private String accessKeyId ;
+    private String accessKeySecret ;
 
     @Autowired  // 添加自动注入
     public FileService fileService;

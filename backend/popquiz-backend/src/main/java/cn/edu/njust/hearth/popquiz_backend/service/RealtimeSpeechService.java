@@ -24,8 +24,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class RealtimeSpeechService {
 
-    @Value("${aliyun.access-key-id}") private String accessKeyId;
-    @Value("${aliyun.access-key-secret}") private String accessKeySecret;
+     //这里value注入application.properties的阿里云accessKeyId
+     //这里value注入application.properties的阿里云accessKeySecret
 
     @Autowired  // 添加自动注入
     public FileService fileService;
@@ -225,7 +225,7 @@ public class RealtimeSpeechService {
             transcriber = new SpeechTranscriber(client, createListener(speech_id));
 
             // 3. 配置识别参数
-            transcriber.setAppKey("k3jt5KYIJKNxIBvh");
+            transcriber.setAppKey("");//这里补充application.properties的阿里云的Appkey
             transcriber.setFormat(InputFormatEnum.PCM);
             transcriber.setSampleRate(SampleRateEnum.SAMPLE_RATE_16K);
             transcriber.setEnableIntermediateResult(true);

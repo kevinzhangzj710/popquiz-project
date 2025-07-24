@@ -1,14 +1,23 @@
 import { HomePageLayout } from "./Dashboard.tsx";
 import { useParams } from "react-router";
 import { ErrorBack } from "../ui/utils.tsx";
-import { QuestionShowcase, type question_data } from "../ui/Questions.tsx";
+import { type question_data, QuestionShowcase } from "../ui/Questions.tsx";
 import { useEffect, useState } from "react";
 import { Button, Divider, message, Radio, Typography } from "antd";
 import { $fetch } from "../api/api-utils.ts";
 import dayjs from "dayjs";
 import { useAtomValue } from "jotai";
 import { user_id_atom } from "../states/user.ts";
-import { CommentList, type comment_data } from "../ui/Comments.tsx";
+import { type comment_data, CommentList } from "../ui/Comments.tsx";
+
+type statics_data = {
+  answeredCount: number;
+  unansweredCount: number;
+  correctCount: number;
+  wrongCount: number;
+  totalCount: number;
+  accuracyRate: number;
+};
 
 export function QuestionPage() {
   const { question_id } = useParams();
@@ -29,6 +38,7 @@ export function TeacherQuestionPage() {
   const [question, setQuestion] = useState<question_data>();
   const [messageApi, contextHolder] = message.useMessage();
   const [comments, setComments] = useState<comment_data[]>([]);
+  const [statics, setStatics] = useState<statics_data>();
 
   async function fetchQuestion() {
     const question_id = q_id;
@@ -63,8 +73,26 @@ export function TeacherQuestionPage() {
     }
   }
 
+  async function fetchQuestionStatics() {
+    const question_id = q_id;
+    const { data, error } = await $fetch.GET("/api/getResultOfQuestion", {
+      params: {
+        query: {
+          question_id,
+        },
+      },
+    });
+    if (error) {
+      console.log(error);
+      messageApi.error("获取统计信息出错");
+    } else {
+      setStatics(data);
+    }
+  }
+
   useEffect(() => {
     fetchQuestion();
+    fetchQuestionStatics();
   }, [question_id, user_id]);
 
   return (
@@ -100,8 +128,25 @@ export function TeacherQuestionPage() {
                     label: answer,
                   }))}
                 />
-                <Divider />
-                {/* 统计数据缺失 */}
+                {statics && (
+                  <>
+                    <Divider />
+                    <Typography.Title level={2}>作答统计信息</Typography.Title>
+                    <Typography>总共参与人数：{statics.totalCount}</Typography>
+                    <Typography>
+                      作答人数/未作答人数：
+                      {`${statics.answeredCount}/${statics.unansweredCount}`}
+                    </Typography>
+                    <Typography>
+                      回答正确人数/回答错误人数：
+                      {`${statics.correctCount}/${statics.wrongCount}`}
+                    </Typography>
+                    <Typography>
+                      正确率：
+                      {statics.accuracyRate * 100}%
+                    </Typography>
+                  </>
+                )}
                 <Divider />
                 <CommentList
                   dataSource={comments}
@@ -219,6 +264,7 @@ export function StudentQuestionPage() {
     messageApi.success("提交成功");
     setSubmitted(true);
   }
+
   async function fetchComment() {
     const question_id = q_id;
     const { data, error } = await $fetch.GET("/api/getQueAllComments", {

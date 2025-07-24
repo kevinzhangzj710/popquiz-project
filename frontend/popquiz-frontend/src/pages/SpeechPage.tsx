@@ -88,6 +88,7 @@ function TeacherSpeechPage() {
   const [questions, setQuestions] = useState<question_data[]>();
   const [messageApi, contextHolder] = message.useMessage();
   const [comments, setComments] = useState<comment_data[]>([]);
+  const [fileList, setFileList] = useState<string[]>([]);
 
   async function fetchRole() {
     const { data, error } = await $fetch.GET("/api/getTypeofUser", {
@@ -151,9 +152,26 @@ function TeacherSpeechPage() {
     });
     if (error) {
       console.log(error);
-      messageApi.success("获取测验列表出错");
+      messageApi.error("获取测验列表出错");
     } else {
       setQuestions(data);
+    }
+  }
+
+  async function fetchFileList() {
+    const speech_id = s_id;
+    const { data, error } = await $fetch.GET("/api/getAllUploads", {
+      params: {
+        query: {
+          speech_id,
+        },
+      },
+    });
+    if (error) {
+      console.log(error);
+      messageApi.error("获取已上传文件列表失败");
+    } else {
+      setFileList(data);
     }
   }
 
@@ -162,6 +180,7 @@ function TeacherSpeechPage() {
     fetchSpeech();
     fetchQuestions();
     fetchComment();
+    fetchFileList();
   }, [user_id, speech_id]);
 
   return (
@@ -182,7 +201,15 @@ function TeacherSpeechPage() {
               {speech.speaker_id === user_id && (
                 <>
                   <Divider />
-                  <>FILELIST</>
+                  <>
+                    <Typography.Title level={4}>
+                      已上传的文件列表
+                    </Typography.Title>
+                    <List
+                      dataSource={fileList}
+                      renderItem={(item) => <List.Item>{item}</List.Item>}
+                    />
+                  </>
                   <Upload
                     name={"file"}
                     action={"/api/upload"}

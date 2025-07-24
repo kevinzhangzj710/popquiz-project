@@ -13,6 +13,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * 上传speech的pdf和ppt文件
+         * @description 上传成功返回保存路径，失败返回错误信息
+         */
         post: operations["handleFileUpload"];
         delete?: never;
         options?: never;
@@ -34,22 +38,6 @@ export interface paths {
          * @description 不返回任何值
          */
         post: operations["uploadVoiceFile"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/tingwu/realtime-meeting": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["createRealtimeMeeting"];
         delete?: never;
         options?: never;
         head?: never;
@@ -524,7 +512,7 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * 获取针对某个题目的具体信息
+         * 获取针对某个题目的统计信息
          * @description 返回该题目的具体信息，封装到一个实体类里面，字段含义依次为：多少人回答了、多少人没回答、多少人答对了、多少人答错了、共有多少人参加了speech、这道题的正确率是多少
          */
         get: operations["getResultOfQuestion"];
@@ -716,6 +704,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/getAllUploads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 获取该speech上传的所有文件名
+         * @description 获取成功返回文件名列表，失败返回空列表
+         */
+        get: operations["getAllUploads"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/generateQue": {
         parameters: {
             query?: never;
@@ -740,19 +748,6 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        RealtimeMeetingRequest: {
-            sourceLanguage?: string;
-            format?: string;
-            /** Format: int32 */
-            sampleRate?: number;
-            diarizationEnabled?: boolean;
-            /** Format: int32 */
-            speakerCount?: number;
-            translationEnabled?: boolean;
-            targetLanguages?: string[];
-            summarizationEnabled?: boolean;
-            summarizationTypes?: string[];
-        };
         RegisterRequest: {
             username?: string;
             password?: string;
@@ -952,30 +947,6 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
-            };
-        };
-    };
-    createRealtimeMeeting: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["RealtimeMeetingRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": Record<string, never>;
-                };
             };
         };
     };
@@ -1725,6 +1696,28 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["Course"];
+                };
+            };
+        };
+    };
+    getAllUploads: {
+        parameters: {
+            query: {
+                speech_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string[];
                 };
             };
         };

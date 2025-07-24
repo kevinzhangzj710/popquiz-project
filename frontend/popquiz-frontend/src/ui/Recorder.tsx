@@ -1,13 +1,40 @@
-import { useRef, useState } from "react";
-import { Button, Card, Collapse, Divider, Space, Typography } from "antd";
+import { useEffect, useRef, useState } from "react";
+import {
+  Button,
+  Card,
+  Collapse,
+  Divider,
+  message,
+  Space,
+  Typography,
+} from "antd";
+import { $api, $fetch } from "../api/api-utils";
 
 export function Recorder({ speech_id }: { speech_id: number }) {
   const [recording, setRecording] = useState<boolean>(false);
   const mediaRecorderRef = useRef<MediaRecorder>(undefined);
   const audioChunksRef = useRef<Blob[]>([]);
   const [convertedText, setConvertedText] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
 
-  const sendRecording = async () => {};
+  const sendRecording = async (audioBlob:Blob) => {
+    const formData = new FormData();
+    formData.append(
+      "file",
+      audioBlob,
+      "example.webm",
+    );
+    const params = new URLSearchParams({
+      speech_id: speech_id.toString(),
+    });
+    fetch(`/api/tingwu/uploadVoiceFile?${params.toString()}`, {
+      method: "POST",
+      body: formData,
+    }).catch((e) => {
+      console.log(e);
+      messageApi.error("上传实时录音失败");
+    });
+  };
 
   const startRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -16,10 +43,10 @@ export function Recorder({ speech_id }: { speech_id: number }) {
     mediaRecorderRef.current.ondataavailable = (e) => {
       console.log(e.data);
       audioChunksRef.current.push(e.data);
+      const audioBlob = new Blob([e.data], { type: "audio/wav" });
+      sendRecording(audioBlob);
     };
     mediaRecorderRef.current.onstop = async () => {
-      const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
-      downloadWAV(audioBlob);
       audioChunksRef.current = [];
     };
 
@@ -41,12 +68,27 @@ export function Recorder({ speech_id }: { speech_id: number }) {
   };
 
   const fetchConvertedText = async () => {
-    // TODO lack of api
-    setConvertedText(convertedText + "recorded text.");
+    const {data,error}=await $fetch.GET('/api/tingwu/getTextofVoice',{
+      params:{
+        query:{
+          speech_id
+        }
+      }
+    })
+    if(error){
+      console.log(error)
+      messageApi.error('获取转录文本失败')
+    }else{
+      setConvertedText(data)
+    }
   };
+  useEffect(()=>{
+    fetchConvertedText()
+  },[speech_id,audioChunksRef.current])
 
   return (
     <Card title={"实时语音转录功能"}>
+      {contextHolder}
       <Space size={"middle"}>
         <Typography
           style={{

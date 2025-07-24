@@ -22,6 +22,7 @@ import com.openai.models.chat.completions.StructuredChatCompletionCreateParams;
 import com.openai.models.chat.completions.ChatCompletionCreateParams;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Timestamp;
@@ -45,7 +46,7 @@ public class QwenController {
         List<String>urls = filesMapper.findFileBySpeechID(speech_id);
         String content_pdf = " ";
         for (String url : urls) {
-            content_pdf = Files.readString(Path.of(url));
+            content_pdf = Files.readString(Path.of(url), Charset.forName("UTF-8"));
         }
         String content = content_voice +  content_pdf;
         //System.out.println("1111111111111111111111111111"+content+"22222222222222222222222222222");

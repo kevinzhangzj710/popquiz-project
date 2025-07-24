@@ -127,39 +127,41 @@ export function CourseList({
           />
         </ModalForm>
       )}
-      <ModalForm<{
-        course_id: number;
-        is_speaker: boolean;
-      }>
-        title={"加入课程"}
-        trigger={<Button>加入课程</Button>}
-        onFinish={async (formData) => {
-          if (formData.is_speaker) {
-            // TODO lack of API
-          } else {
-            const { data, error } = await $fetch.POST("/api/addCourse", {
-              body: {
-                uid: user_id,
-                course_id: formData.course_id,
-              },
-            });
-            if (error || data === 0) {
-              messageApi.error("添加课程失败");
+      {!teaching && (
+        <ModalForm<{
+          course_id: number;
+          is_speaker: boolean;
+        }>
+          title={"加入课程"}
+          trigger={<Button>加入课程</Button>}
+          onFinish={async (formData) => {
+            if (formData.is_speaker) {
+              // TODO lack of API
             } else {
-              messageApi.success(`添加课程成功`);
-              await fetchCourses();
+              const { data, error } = await $fetch.POST("/api/addCourse", {
+                body: {
+                  uid: user_id,
+                  course_id: formData.course_id,
+                },
+              });
+              if (error || data === 0) {
+                messageApi.error("添加课程失败");
+              } else {
+                messageApi.success(`添加课程成功`);
+                await fetchCourses();
+              }
             }
-          }
-        }}
-      >
-        <ProFormDigit name={"course_id"} label={"课程ID"} />
-        <ProFormCheckbox
-          disabled={!teaching}
-          name={"is_student"}
-          label={"以演讲者身份加入"}
-          initialValue={teaching}
-        />
-      </ModalForm>
+          }}
+        >
+          <ProFormDigit name={"course_id"} label={"课程ID"} />
+          <ProFormCheckbox
+            disabled={!teaching}
+            name={"is_student"}
+            label={"以演讲者身份加入"}
+            initialValue={teaching}
+          />
+        </ModalForm>
+      )}
 
       <List
         dataSource={courses}

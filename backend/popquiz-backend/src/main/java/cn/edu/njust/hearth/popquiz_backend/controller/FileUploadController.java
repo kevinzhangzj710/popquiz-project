@@ -53,6 +53,15 @@ public class FileUploadController {
             // 3. 生成唯一文件名
             String uuid = UUID.randomUUID().toString();
             String txtFilename = uuid + ".txt";
+
+            File storageDir = new File(storageLocation);
+            if (!storageDir.exists()) {
+                boolean created = storageDir.mkdirs();
+                if (!created) {
+                    return "无法创建存储目录: " + storageLocation;
+                }
+            }
+
             String outputPath = storageLocation + File.separator + txtFilename;
 
             // 4. 保存文本文件

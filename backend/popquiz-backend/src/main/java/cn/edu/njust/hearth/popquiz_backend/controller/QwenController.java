@@ -65,7 +65,7 @@ public class QwenController {
                 "1. question不超过50字\n" +
                 "2. selection包含四个用换行符分隔的选项（格式：A.xxx B.xxx C.xxx D.xxx）一个选项一行\n" +
                 "3. answer只能是A/B/C/D中的一个字母\n" +
-                "4. 题目主题：计算机网络基础知识";
+                "4. 题目主题：测试听众是否认真听了本演讲";
 
 
         // 创建请求参数

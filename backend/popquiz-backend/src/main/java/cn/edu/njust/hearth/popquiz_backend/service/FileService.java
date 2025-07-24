@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -48,7 +49,7 @@ public class FileService {
     public String getTextContent(String fileName) {
         File f1 = dirRoot.resolve(fileName).toFile();
         try {
-            return Files.readString(Path.of(f1.getAbsolutePath()));
+            return Files.readString(Path.of(f1.getAbsolutePath()), Charset.forName("UTF-8"));
         } catch (IOException e) {
             e.printStackTrace();
             return "";

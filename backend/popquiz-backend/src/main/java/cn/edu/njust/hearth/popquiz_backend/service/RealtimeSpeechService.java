@@ -241,6 +241,7 @@ public class RealtimeSpeechService {
 
             // 6. 停止识别器
             transcriber.stop();
+            transcriber.close();
         } catch (Exception e) {
             throw new RuntimeException("WAV 文件转写失败", e);
         } finally {
@@ -254,7 +255,7 @@ public class RealtimeSpeechService {
      * 创建监听器
      */
     private SpeechTranscriberListener createListener(int speech_id) {
-        System.out.println("1111111111111"+fileService);
+        //System.out.println("1111111111111"+fileService);
         return new SpeechTranscriberListener() {
             //public FileService fs = fileService;
 

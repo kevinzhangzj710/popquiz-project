@@ -65,7 +65,7 @@ public class TingwuController {
         File of =new File(uploadDir ,   uniqueName + ".wav");
         AudioConverter.convert(originalFile,of);
         realtimeSpeechService.transcribeWavFileInChunks(speech_id, of.getAbsolutePath(),4096);
-        Thread.sleep(30000);
+        //Thread.sleep(30000);
         //of.delete();
     }
 

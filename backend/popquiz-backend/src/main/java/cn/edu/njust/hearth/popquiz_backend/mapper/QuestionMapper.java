@@ -36,4 +36,7 @@ public interface QuestionMapper {
     @Select("SELECT * FROM SUBMITS WHERE QUESTION_ID = #{qid}")
     public List<Submit> findSubmitsByQuestionId(@Param("qid") int qid);
 
+    @Select("SELECT QUESTION from QUESTIONS where SPEECH_ID = #{speech_id}")
+    public List<String> findQuestionsBySpeechId(@Param("speech_id") int speech_id);
+
 }

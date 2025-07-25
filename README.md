@@ -29,6 +29,8 @@ PopQuiz - using AI to give smart pop quiz about any content, a quick and easy wa
 java -jar popquiz-full-app.jar --spring.config.location="application.properties"
 ```
 
+**注意：在运行该指令之前，请确保你的JAVA版本在17及以上**
+
 可以访问 `localhost:8080` 或者 `127.0.0.1:8080` 来访问服务，只要能访问到主机 8080 端口的设备，都可以访问到本服务。
 
 ## application.properties配置内容
